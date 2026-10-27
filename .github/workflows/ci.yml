@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install Icarus Verilog
         run: |
@@ -26,7 +26,7 @@ jobs:
 
       - name: Upload simulation logs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: a07-simulation-results
           path: |
