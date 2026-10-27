@@ -1,0 +1,27 @@
+Startpoint: shamt[2] (input port clocked by vclk)
+Endpoint: dout[0] (output port clocked by vclk)
+Path Group: vclk
+Path Type: min
+
+  Delay    Time   Description
+---------------------------------------------------------
+   0.00    0.00   clock vclk (rise edge)
+   0.00    0.00   clock network delay (ideal)
+   0.00    0.00 ^ input external delay
+   0.00    0.00 ^ shamt[2] (in)
+   0.03    0.03 v u_stage4/_22_/Y (sky130_fd_sc_hd__o21ai_0)
+   0.00    0.03 v dout[0] (out)
+           0.03   data arrival time
+
+   0.00    0.00   clock vclk (rise edge)
+   0.00    0.00   clock network delay (ideal)
+   0.00    0.00   clock reconvergence pessimism
+   0.00    0.00   output external delay
+           0.00   data required time
+---------------------------------------------------------
+           0.00   data required time
+          -0.03   data arrival time
+---------------------------------------------------------
+           0.03   slack (MET)
+
+

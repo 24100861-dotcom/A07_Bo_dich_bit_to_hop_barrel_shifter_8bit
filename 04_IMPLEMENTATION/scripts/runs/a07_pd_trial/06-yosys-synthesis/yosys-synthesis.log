@@ -1,0 +1,963 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2026  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.62 (git sha1 7326bb7d6641500ecb285c291a54a662cb1e76cf, clang++ 21.1.2 -fPIC -O3)
+
+1. Executing Liberty frontend: /home/trantung2006/.ciel/ciel/sky130/versions/8afc8346a57fe1ab7934ba5a6056ea8b43078e71/ciel/sky130/versions/8afc8346a57fe1ab7934ba5a6056ea8b43078e71/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+Imported 428 cell types from liberty file.
+[INFO] Using SDC file '/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/scripts/runs/a07_pd_trial/06-yosys-synthesis/synthesis.abc.sdc' for ABC…
+
+2. Executing Verilog-2005 frontend: /home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_barrel8.sv
+Parsing SystemVerilog input from `/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_barrel8.sv' to AST representation.
+Storing AST representation for module `$abstract\a07_barrel8'.
+Successfully finished Verilog frontend.
+
+3. Executing Verilog-2005 frontend: /home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv
+Parsing SystemVerilog input from `/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv' to AST representation.
+Storing AST representation for module `$abstract\a07_shift_stage'.
+Successfully finished Verilog frontend.
+
+4. Executing HIERARCHY pass (managing design hierarchy).
+
+5. Executing AST frontend in derive mode using pre-parsed AST for module `\a07_barrel8'.
+Generating RTLIL representation for module `\a07_barrel8'.
+
+5.1. Analyzing design hierarchy..
+Top module:  \a07_barrel8
+Parameter \S = 4
+
+5.2. Executing AST frontend in derive mode using pre-parsed AST for module `\a07_shift_stage'.
+Parameter \S = 4
+Generating RTLIL representation for module `$paramod\a07_shift_stage\S=s32'00000000000000000000000000000100'.
+Parameter \S = 2
+
+5.3. Executing AST frontend in derive mode using pre-parsed AST for module `\a07_shift_stage'.
+Parameter \S = 2
+Generating RTLIL representation for module `$paramod\a07_shift_stage\S=s32'00000000000000000000000000000010'.
+Parameter \S = 1
+
+5.4. Executing AST frontend in derive mode using pre-parsed AST for module `\a07_shift_stage'.
+Parameter \S = 1
+Generating RTLIL representation for module `$paramod\a07_shift_stage\S=s32'00000000000000000000000000000001'.
+
+5.5. Analyzing design hierarchy..
+Top module:  \a07_barrel8
+Used module:     $paramod\a07_shift_stage\S=s32'00000000000000000000000000000100
+Used module:     $paramod\a07_shift_stage\S=s32'00000000000000000000000000000010
+Used module:     $paramod\a07_shift_stage\S=s32'00000000000000000000000000000001
+
+5.6. Analyzing design hierarchy..
+Top module:  \a07_barrel8
+Used module:     $paramod\a07_shift_stage\S=s32'00000000000000000000000000000100
+Used module:     $paramod\a07_shift_stage\S=s32'00000000000000000000000000000010
+Used module:     $paramod\a07_shift_stage\S=s32'00000000000000000000000000000001
+Removing unused module `$abstract\a07_shift_stage'.
+Removing unused module `$abstract\a07_barrel8'.
+Removed 2 unused modules.
+Renaming module a07_barrel8 to a07_barrel8.
+
+6. Executing ATTRMAP pass (move or copy attributes).
+
+7. Executing TRIBUF pass.
+
+8. Executing HIERARCHY pass (managing design hierarchy).
+
+8.1. Analyzing design hierarchy..
+Top module:  \a07_barrel8
+Used module:     $paramod\a07_shift_stage\S=s32'00000000000000000000000000000100
+Used module:     $paramod\a07_shift_stage\S=s32'00000000000000000000000000000010
+Used module:     $paramod\a07_shift_stage\S=s32'00000000000000000000000000000001
+
+8.2. Analyzing design hierarchy..
+Top module:  \a07_barrel8
+Used module:     $paramod\a07_shift_stage\S=s32'00000000000000000000000000000100
+Used module:     $paramod\a07_shift_stage\S=s32'00000000000000000000000000000010
+Used module:     $paramod\a07_shift_stage\S=s32'00000000000000000000000000000001
+Removed 0 unused modules.
+
+9. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+10. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Removed a total of 0 dead cases.
+
+11. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 0 assignments to connections.
+
+12. Executing PROC_INIT pass (extract init attributes).
+
+13. Executing PROC_ARST pass (detect async resets in processes).
+
+14. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+
+15. Executing PROC_MUX pass (convert decision trees to multiplexers).
+
+16. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+17. Executing PROC_DFF pass (convert process syncs to FFs).
+
+18. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+19. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+20. Executing CHECK pass (checking for obvious problems).
+Checking module a07_barrel8...
+Checking module $paramod\a07_shift_stage\S=s32'00000000000000000000000000000100...
+Checking module $paramod\a07_shift_stage\S=s32'00000000000000000000000000000001...
+Checking module $paramod\a07_shift_stage\S=s32'00000000000000000000000000000010...
+Found and reported 0 problems.
+
+21. Executing OPT_EXPR pass (perform const folding).
+Optimizing module a07_barrel8.
+Optimizing module $paramod\a07_shift_stage\S=s32'00000000000000000000000000000100.
+Optimizing module $paramod\a07_shift_stage\S=s32'00000000000000000000000000000001.
+Optimizing module $paramod\a07_shift_stage\S=s32'00000000000000000000000000000010.
+
+22. Executing FLATTEN pass (flatten design).
+Deleting now unused module $paramod\a07_shift_stage\S=s32'00000000000000000000000000000100.
+Deleting now unused module $paramod\a07_shift_stage\S=s32'00000000000000000000000000000001.
+Deleting now unused module $paramod\a07_shift_stage\S=s32'00000000000000000000000000000010.
+<suppressed ~3 debug messages>
+
+23. Executing OPT_EXPR pass (perform const folding).
+Optimizing module a07_barrel8.
+
+24. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \a07_barrel8..
+Removed 0 unused cells and 49 unused wires.
+<suppressed ~1 debug messages>
+
+25. Executing OPT_EXPR pass (perform const folding).
+Optimizing module a07_barrel8.
+
+26. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\a07_barrel8'.
+Computing hashes of 53 cells of `\a07_barrel8'.
+Finding duplicate cells in `\a07_barrel8'.
+Removed a total of 0 cells.
+
+27. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \a07_barrel8..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~208 debug messages>
+
+28. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \a07_barrel8.
+Performed a total of 0 changes.
+
+29. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\a07_barrel8'.
+Computing hashes of 53 cells of `\a07_barrel8'.
+Finding duplicate cells in `\a07_barrel8'.
+Removed a total of 0 cells.
+
+30. Executing OPT_DFF pass (perform DFF optimizations).
+
+31. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \a07_barrel8..
+
+32. Executing OPT_EXPR pass (perform const folding).
+Optimizing module a07_barrel8.
+
+33. Executing FSM pass (extract and optimize FSM).
+
+33.1. Executing FSM_DETECT pass (finding FSMs in design).
+
+33.2. Executing FSM_EXTRACT pass (extracting FSM from design).
+
+33.3. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+33.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \a07_barrel8..
+
+33.5. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+33.6. Executing FSM_RECODE pass (re-assigning FSM state encoding).
+
+33.7. Executing FSM_INFO pass (dumping all available information on FSM cells).
+
+33.8. Executing FSM_MAP pass (mapping FSMs to basic logic).
+
+34. Executing OPT_EXPR pass (perform const folding).
+Optimizing module a07_barrel8.
+
+35. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\a07_barrel8'.
+Computing hashes of 53 cells of `\a07_barrel8'.
+Finding duplicate cells in `\a07_barrel8'.
+Removed a total of 0 cells.
+
+36. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \a07_barrel8..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~208 debug messages>
+
+37. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \a07_barrel8.
+Performed a total of 0 changes.
+
+38. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\a07_barrel8'.
+Computing hashes of 53 cells of `\a07_barrel8'.
+Finding duplicate cells in `\a07_barrel8'.
+Removed a total of 0 cells.
+
+39. Executing OPT_DFF pass (perform DFF optimizations).
+
+40. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \a07_barrel8..
+
+41. Executing OPT_EXPR pass (perform const folding).
+Optimizing module a07_barrel8.
+
+42. Executing WREDUCE pass (reducing word size of cells).
+
+43. Executing PEEPOPT pass (run peephole optimizers).
+
+44. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \a07_barrel8..
+
+45. Executing ALUMACC pass (create $alu and $macc cells).
+Extracting $alu and $macc cells in module a07_barrel8:
+  created 0 $alu and 0 $macc cells.
+
+46. Executing SHARE pass (SAT-based resource sharing).
+
+47. Executing OPT_EXPR pass (perform const folding).
+Optimizing module a07_barrel8.
+
+48. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\a07_barrel8'.
+Computing hashes of 53 cells of `\a07_barrel8'.
+Finding duplicate cells in `\a07_barrel8'.
+Removed a total of 0 cells.
+
+49. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \a07_barrel8..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~208 debug messages>
+
+50. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \a07_barrel8.
+Performed a total of 0 changes.
+
+51. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\a07_barrel8'.
+Computing hashes of 53 cells of `\a07_barrel8'.
+Finding duplicate cells in `\a07_barrel8'.
+Removed a total of 0 cells.
+
+52. Executing OPT_DFF pass (perform DFF optimizations).
+
+53. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \a07_barrel8..
+
+54. Executing OPT_EXPR pass (perform const folding).
+Optimizing module a07_barrel8.
+
+55. Executing MEMORY pass.
+
+55.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+55.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+55.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+55.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+55.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+55.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \a07_barrel8..
+
+55.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+55.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+55.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \a07_barrel8..
+
+55.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+56. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \a07_barrel8..
+
+57. Executing OPT_EXPR pass (perform const folding).
+Optimizing module a07_barrel8.
+<suppressed ~7 debug messages>
+
+58. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\a07_barrel8'.
+Computing hashes of 53 cells of `\a07_barrel8'.
+Finding duplicate cells in `\a07_barrel8'.
+Removed a total of 0 cells.
+
+59. Executing OPT_DFF pass (perform DFF optimizations).
+
+60. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \a07_barrel8..
+
+61. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+62. Executing OPT_EXPR pass (perform const folding).
+Optimizing module a07_barrel8.
+
+63. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\a07_barrel8'.
+Computing hashes of 53 cells of `\a07_barrel8'.
+Finding duplicate cells in `\a07_barrel8'.
+Removed a total of 0 cells.
+
+64. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \a07_barrel8..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~119 debug messages>
+
+65. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \a07_barrel8.
+Performed a total of 0 changes.
+
+66. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\a07_barrel8'.
+Computing hashes of 53 cells of `\a07_barrel8'.
+Finding duplicate cells in `\a07_barrel8'.
+Removed a total of 0 cells.
+
+67. Executing OPT_SHARE pass.
+
+68. Executing OPT_DFF pass (perform DFF optimizations).
+
+69. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \a07_barrel8..
+
+70. Executing OPT_EXPR pass (perform const folding).
+Optimizing module a07_barrel8.
+
+71. Executing TECHMAP pass (map to technology primitives).
+
+71.1. Executing Verilog-2005 frontend: /nix/store/f1q0w7rd0a4ny4hqvfxlhs4cmariidcy-yosys-0.62/bin/../share/yosys/techmap.v
+Parsing Verilog input from `/nix/store/f1q0w7rd0a4ny4hqvfxlhs4cmariidcy-yosys-0.62/bin/../share/yosys/techmap.v' to AST representation.
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu_brent_kung'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `$__div_mod_u'.
+Generating RTLIL representation for module `$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_pmux'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Generating RTLIL representation for module `$connect'.
+Generating RTLIL representation for module `$input_port'.
+Successfully finished Verilog frontend.
+
+71.2. Continuing TECHMAP pass.
+Using extmapper simplemap for cells of type $and.
+Using extmapper simplemap for cells of type $mux.
+No more expansions possible.
+<suppressed ~127 debug messages>
+
+72. Executing OPT_EXPR pass (perform const folding).
+Optimizing module a07_barrel8.
+
+73. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\a07_barrel8'.
+Computing hashes of 53 cells of `\a07_barrel8'.
+Finding duplicate cells in `\a07_barrel8'.
+Removed a total of 0 cells.
+
+74. Executing OPT_DFF pass (perform DFF optimizations).
+
+75. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \a07_barrel8..
+
+76. Executing OPT_EXPR pass (perform const folding).
+Optimizing module a07_barrel8.
+
+77. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\a07_barrel8'.
+Computing hashes of 53 cells of `\a07_barrel8'.
+Finding duplicate cells in `\a07_barrel8'.
+Removed a total of 0 cells.
+
+78. Executing OPT_DFF pass (perform DFF optimizations).
+
+79. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \a07_barrel8..
+
+80. Executing ABC pass (technology mapping using ABC).
+
+80.1. Extracting gate netlist of module `\a07_barrel8' to `<abc-temp-dir>/input.blif'..
+
+80.1.1. Executed ABC.
+Extracted 50 gates and 63 wires to a netlist network with 13 inputs and 8 outputs.
+Running ABC script: <abc-temp-dir>/abc.script
+ABC: ======== ABC command line "source <abc-temp-dir>/abc.script"
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library /tmp/yosys-abc-GJWKOl/stdcells.genlib 
+ABC: + strash 
+ABC: + dretime 
+ABC: + map 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+80.1.2. Re-integrating ABC results.
+ABC RESULTS:               AND cells:        1
+ABC RESULTS:            ANDNOT cells:        7
+ABC RESULTS:               MUX cells:       41
+ABC RESULTS:              NAND cells:        1
+ABC RESULTS:               NOT cells:        4
+ABC RESULTS:        internal signals:       42
+ABC RESULTS:           input signals:       13
+ABC RESULTS:          output signals:        8
+Removing temp directory.
+Removing global temp directory.
+
+81. Executing OPT pass (performing simple optimizations).
+
+81.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module a07_barrel8.
+<suppressed ~25 debug messages>
+
+81.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\a07_barrel8'.
+Computing hashes of 57 cells of `\a07_barrel8'.
+Finding duplicate cells in `\a07_barrel8'.
+Removed a total of 0 cells.
+
+81.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+81.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \a07_barrel8..
+Removed 3 unused cells and 40 unused wires.
+<suppressed ~19 debug messages>
+
+81.5. Finished fast OPT passes.
+
+82. Executing HIERARCHY pass (managing design hierarchy).
+
+82.1. Analyzing design hierarchy..
+Top module:  \a07_barrel8
+
+82.2. Analyzing design hierarchy..
+Top module:  \a07_barrel8
+Removed 0 unused modules.
+
+83. Executing CHECK pass (checking for obvious problems).
+Checking module a07_barrel8...
+Found and reported 0 problems.
+
+84. Printing statistics.
+
+=== a07_barrel8 ===
+
+        +----------Local Count, excluding submodules.
+        | 
+       61 wires
+      120 wire bits
+       18 public wires
+       77 public wire bits
+        4 ports
+       21 port bits
+       54 cells
+        7   $_ANDNOT_
+        1   $_AND_
+       41   $_MUX_
+        1   $_NAND_
+        1   $_NOT_
+        3   $scopeinfo
+
+85. Executing OPT pass (performing simple optimizations).
+
+85.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module a07_barrel8.
+
+85.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\a07_barrel8'.
+Computing hashes of 54 cells of `\a07_barrel8'.
+Finding duplicate cells in `\a07_barrel8'.
+Removed a total of 0 cells.
+
+85.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \a07_barrel8..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+85.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \a07_barrel8.
+Performed a total of 0 changes.
+
+85.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\a07_barrel8'.
+Computing hashes of 54 cells of `\a07_barrel8'.
+Finding duplicate cells in `\a07_barrel8'.
+Removed a total of 0 cells.
+
+85.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+85.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \a07_barrel8..
+
+85.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module a07_barrel8.
+
+85.9. Finished fast OPT passes. (There is nothing left to do.)
+
+86. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \a07_barrel8..
+Removed 3 unused cells and 14 unused wires.
+<suppressed ~17 debug messages>
+{
+   "creator": "Yosys 0.62 (git sha1 7326bb7d6641500ecb285c291a54a662cb1e76cf, clang++ 21.1.2 -fPIC -O3)",
+   "invocation": "stat -json -liberty /home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/scripts/runs/a07_pd_trial/tmp/0416593c25d64aadbe4acd63b5e50ee9.lib ",
+   "modules": {
+      "\\a07_barrel8": {
+         "num_wires":         47,
+         "num_wire_bits":     64,
+         "num_pub_wires":     4,
+         "num_pub_wire_bits": 21,
+         "num_ports":         4,
+         "num_port_bits":     21,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         51,
+         "num_submodules":       0,
+         "num_cells_by_type": {
+            "$_ANDNOT_": 7,
+            "$_AND_": 1,
+            "$_MUX_": 41,
+            "$_NAND_": 1,
+            "$_NOT_": 1
+         }
+      }
+   },
+      "design": {
+         "num_wires":         47,
+         "num_wire_bits":     64,
+         "num_pub_wires":     4,
+         "num_pub_wire_bits": 21,
+         "num_ports":         4,
+         "num_port_bits":     21,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         51,
+         "num_submodules":       0,
+         "num_cells_by_type": {
+            "$_ANDNOT_": 7,
+            "$_AND_": 1,
+            "$_MUX_": 41,
+            "$_NAND_": 1,
+            "$_NOT_": 1
+         }
+      }
+}
+
+87. Printing statistics.
+
+=== a07_barrel8 ===
+
+        +----------Local Count, excluding submodules.
+        | 
+       47 wires
+       64 wire bits
+        4 public wires
+       21 public wire bits
+        4 ports
+       21 port bits
+       51 cells
+        7   $_ANDNOT_
+        1   $_AND_
+       41   $_MUX_
+        1   $_NAND_
+        1   $_NOT_
+
+   Area for cell type $_ANDNOT_ is unknown!
+   Area for cell type $_AND_ is unknown!
+   Area for cell type $_MUX_ is unknown!
+   Area for cell type $_NAND_ is unknown!
+   Area for cell type $_NOT_ is unknown!
+
+[INFO] Applying tri-state buffer mapping from '/home/trantung2006/.ciel/ciel/sky130/versions/8afc8346a57fe1ab7934ba5a6056ea8b43078e71/ciel/sky130/versions/8afc8346a57fe1ab7934ba5a6056ea8b43078e71/sky130A/libs.tech/openlane/sky130_fd_sc_hd/tribuff_map.v'…
+
+88. Executing TECHMAP pass (map to technology primitives).
+
+88.1. Executing Verilog-2005 frontend: /home/trantung2006/.ciel/ciel/sky130/versions/8afc8346a57fe1ab7934ba5a6056ea8b43078e71/ciel/sky130/versions/8afc8346a57fe1ab7934ba5a6056ea8b43078e71/sky130A/libs.tech/openlane/sky130_fd_sc_hd/tribuff_map.v
+Parsing Verilog input from `/home/trantung2006/.ciel/ciel/sky130/versions/8afc8346a57fe1ab7934ba5a6056ea8b43078e71/ciel/sky130/versions/8afc8346a57fe1ab7934ba5a6056ea8b43078e71/sky130A/libs.tech/openlane/sky130_fd_sc_hd/tribuff_map.v' to AST representation.
+Generating RTLIL representation for module `$_TBUF_'.
+Successfully finished Verilog frontend.
+
+88.2. Continuing TECHMAP pass.
+No more expansions possible.
+<suppressed ~3 debug messages>
+
+89. Executing SIMPLEMAP pass (map simple cells to gate primitives).
+[INFO] Applying latch mapping from '/home/trantung2006/.ciel/ciel/sky130/versions/8afc8346a57fe1ab7934ba5a6056ea8b43078e71/ciel/sky130/versions/8afc8346a57fe1ab7934ba5a6056ea8b43078e71/sky130A/libs.tech/openlane/sky130_fd_sc_hd/latch_map.v'…
+
+90. Executing TECHMAP pass (map to technology primitives).
+
+90.1. Executing Verilog-2005 frontend: /home/trantung2006/.ciel/ciel/sky130/versions/8afc8346a57fe1ab7934ba5a6056ea8b43078e71/ciel/sky130/versions/8afc8346a57fe1ab7934ba5a6056ea8b43078e71/sky130A/libs.tech/openlane/sky130_fd_sc_hd/latch_map.v
+Parsing Verilog input from `/home/trantung2006/.ciel/ciel/sky130/versions/8afc8346a57fe1ab7934ba5a6056ea8b43078e71/ciel/sky130/versions/8afc8346a57fe1ab7934ba5a6056ea8b43078e71/sky130A/libs.tech/openlane/sky130_fd_sc_hd/latch_map.v' to AST representation.
+Generating RTLIL representation for module `$_DLATCH_P_'.
+Generating RTLIL representation for module `$_DLATCH_N_'.
+Successfully finished Verilog frontend.
+
+90.2. Continuing TECHMAP pass.
+No more expansions possible.
+<suppressed ~4 debug messages>
+
+91. Executing SIMPLEMAP pass (map simple cells to gate primitives).
+
+92. Executing DFFLIBMAP pass (mapping DFF cells to sequential cells from liberty file).
+  cell sky130_fd_sc_hd__dfxtp_2 (noninv, pins=3, area=21.27) is a direct match for cell type $_DFF_P_.
+  cell sky130_fd_sc_hd__dfrtp_2 (noninv, pins=4, area=26.28) is a direct match for cell type $_DFF_PN0_.
+  cell sky130_fd_sc_hd__dfstp_2 (noninv, pins=4, area=26.28) is a direct match for cell type $_DFF_PN1_.
+  cell sky130_fd_sc_hd__dfbbn_2 (noninv, pins=6, area=35.03) is a direct match for cell type $_DFFSR_NNN_.
+  final dff cell mappings:
+    unmapped dff cell: $_DFF_N_
+    \sky130_fd_sc_hd__dfxtp_2 _DFF_P_ (.CLK( C), .D( D), .Q( Q));
+    unmapped dff cell: $_DFF_NN0_
+    unmapped dff cell: $_DFF_NN1_
+    unmapped dff cell: $_DFF_NP0_
+    unmapped dff cell: $_DFF_NP1_
+    \sky130_fd_sc_hd__dfrtp_2 _DFF_PN0_ (.CLK( C), .D( D), .Q( Q), .RESET_B( R));
+    \sky130_fd_sc_hd__dfstp_2 _DFF_PN1_ (.CLK( C), .D( D), .Q( Q), .SET_B( R));
+    unmapped dff cell: $_DFF_PP0_
+    unmapped dff cell: $_DFF_PP1_
+    unmapped dff cell: $_DFFE_NN_
+    unmapped dff cell: $_DFFE_NP_
+    unmapped dff cell: $_DFFE_PN_
+    unmapped dff cell: $_DFFE_PP_
+    \sky130_fd_sc_hd__dfbbn_2 _DFFSR_NNN_ (.CLK_N( C), .D( D), .Q( Q), .Q_N(~Q), .RESET_B( R), .SET_B( S));
+    unmapped dff cell: $_DFFSR_NNP_
+    unmapped dff cell: $_DFFSR_NPN_
+    unmapped dff cell: $_DFFSR_NPP_
+    unmapped dff cell: $_DFFSR_PNN_
+    unmapped dff cell: $_DFFSR_PNP_
+    unmapped dff cell: $_DFFSR_PPN_
+    unmapped dff cell: $_DFFSR_PPP_
+
+92.1. Executing DFFLEGALIZE pass (convert FFs to types supported by the target).
+Mapping DFF cells in module `\a07_barrel8':
+{
+   "creator": "Yosys 0.62 (git sha1 7326bb7d6641500ecb285c291a54a662cb1e76cf, clang++ 21.1.2 -fPIC -O3)",
+   "invocation": "stat -json -liberty /home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/scripts/runs/a07_pd_trial/tmp/0416593c25d64aadbe4acd63b5e50ee9.lib ",
+   "modules": {
+      "\\a07_barrel8": {
+         "num_wires":         47,
+         "num_wire_bits":     64,
+         "num_pub_wires":     4,
+         "num_pub_wire_bits": 21,
+         "num_ports":         4,
+         "num_port_bits":     21,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         51,
+         "num_submodules":       0,
+         "num_cells_by_type": {
+            "$_ANDNOT_": 7,
+            "$_AND_": 1,
+            "$_MUX_": 41,
+            "$_NAND_": 1,
+            "$_NOT_": 1
+         }
+      }
+   },
+      "design": {
+         "num_wires":         47,
+         "num_wire_bits":     64,
+         "num_pub_wires":     4,
+         "num_pub_wire_bits": 21,
+         "num_ports":         4,
+         "num_port_bits":     21,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         51,
+         "num_submodules":       0,
+         "num_cells_by_type": {
+            "$_ANDNOT_": 7,
+            "$_AND_": 1,
+            "$_MUX_": 41,
+            "$_NAND_": 1,
+            "$_NOT_": 1
+         }
+      }
+}
+
+93. Printing statistics.
+
+=== a07_barrel8 ===
+
+        +----------Local Count, excluding submodules.
+        | 
+       47 wires
+       64 wire bits
+        4 public wires
+       21 public wire bits
+        4 ports
+       21 port bits
+       51 cells
+        7   $_ANDNOT_
+        1   $_AND_
+       41   $_MUX_
+        1   $_NAND_
+        1   $_NOT_
+
+   Area for cell type $_ANDNOT_ is unknown!
+   Area for cell type $_AND_ is unknown!
+   Area for cell type $_MUX_ is unknown!
+   Area for cell type $_NAND_ is unknown!
+   Area for cell type $_NOT_ is unknown!
+
+[INFO] Using generated ABC script '/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/scripts/runs/a07_pd_trial/06-yosys-synthesis/AREA_0.abc'…
+
+94. Executing ABC pass (technology mapping using ABC).
+
+94.1. Extracting gate netlist of module `\a07_barrel8' to `/tmp/yosys-abc-7enmvP/input.blif'..
+
+94.1.1. Executed ABC.
+Extracted 51 gates and 64 wires to a netlist network with 13 inputs and 8 outputs.
+Running ABC script: /tmp/yosys-abc-7enmvP/abc.script
+ABC: ======== ABC command line "source /tmp/yosys-abc-7enmvP/abc.script"
+ABC: + read_blif /tmp/yosys-abc-7enmvP/input.blif 
+ABC: + read_lib -w /home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/scripts/runs/a07_pd_trial/tmp/0416593c25d64aadbe4acd63b5e50ee9.lib 
+ABC: Parsing finished successfully.  Parsing time =     0.04 sec
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfbbn_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfrbp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfrtp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfrtp_4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfsbp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfstp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfstp_4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfxbp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfxtp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfxtp_4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dlxtn_1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dlxtn_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dlxtn_4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dlxtp_1".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "sky130_fd_sc_hd__ebufn_2".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "sky130_fd_sc_hd__ebufn_4".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "sky130_fd_sc_hd__ebufn_8".
+ABC: Library "sky130_fd_sc_hd__tt_025C_1v80" from "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/scripts/runs/a07_pd_trial/tmp/0416593c25d64aadbe4acd63b5e50ee9.lib" has 175 cells (17 skipped: 14 seq; 3 tri-state; 0 no func; 0 dont_use; 0 with 2 outputs; 0 with 3+ outputs).  Time =     0.08 sec
+ABC: Memory =    9.54 MB. Time =     0.08 sec
+ABC: Warning: Detected 2 multi-output cells (for example, "sky130_fd_sc_hd__fa_1").
+ABC: + read_constr -v /home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/scripts/runs/a07_pd_trial/06-yosys-synthesis/synthesis.abc.sdc 
+ABC: Setting driving cell to be "sky130_fd_sc_hd__inv_2".
+ABC: Setting output load to be 33.442001.
+ABC: + source /home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/scripts/runs/a07_pd_trial/06-yosys-synthesis/AREA_0.abc 
+ABC: Error: The network is combinational.
+ABC: WireLoad = "none"  Gates =     58 (  5.2 %)   Cap = 10.3 ff (  4.5 %)   Area =      521.75 ( 79.3 %)   Delay =  1465.46 ps  (  6.9 %)               
+ABC: Path  0 --       1 : 0   19 pi                      A =   0.00  Df = 193.8 -102.1 ps  S = 283.9 ps  Cin =  0.0 ff  Cout =  61.5 ff  Cmax =   0.0 ff  G =    0  
+ABC: Path  1 --      51 : 3    1 sky130_fd_sc_hd__mux2_1 A =  11.26  Df = 479.7  -64.8 ps  S =  51.0 ps  Cin =  2.3 ff  Cout =   2.0 ff  Cmax = 173.0 ff  G =   82  
+ABC: Path  2 --      52 : 3    2 sky130_fd_sc_hd__mux2_1 A =  11.26  Df = 712.2 -107.5 ps  S =  62.2 ps  Cin =  2.3 ff  Cout =   4.1 ff  Cmax = 173.0 ff  G =  172  
+ABC: Path  3 --      53 : 3    2 sky130_fd_sc_hd__mux2_1 A =  11.26  Df =1003.7 -270.1 ps  S =  62.9 ps  Cin =  2.3 ff  Cout =   4.3 ff  Cmax = 173.0 ff  G =  179  
+ABC: Path  4 --      58 : 5    1 sky130_fd_sc_hd__o32a_2 A =  11.26  Df =1465.5 -375.9 ps  S = 180.9 ps  Cin =  2.3 ff  Cout =  33.4 ff  Cmax = 300.3 ff  G = 1451  
+ABC: Start-point = pi0 (\mode [0]).  End-point = po1 (\dout [6]).
+ABC: netlist                       : i/o =   13/    8  lat =    0  nd =    58  edge =    172  area =521.80  delay = 5.00  lev = 5
+ABC: + write_blif /tmp/yosys-abc-7enmvP/output.blif 
+
+94.1.2. Re-integrating ABC results.
+ABC RESULTS:   sky130_fd_sc_hd__a21o_2 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__a21oi_2 cells:        6
+ABC RESULTS:   sky130_fd_sc_hd__a2bb2o_2 cells:        4
+ABC RESULTS:   sky130_fd_sc_hd__a311o_2 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__a31o_2 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__and2_2 cells:        2
+ABC RESULTS:   sky130_fd_sc_hd__and2b_2 cells:        5
+ABC RESULTS:   sky130_fd_sc_hd__and3_2 cells:        2
+ABC RESULTS:   sky130_fd_sc_hd__inv_2 cells:        3
+ABC RESULTS:   sky130_fd_sc_hd__mux2_1 cells:        9
+ABC RESULTS:   sky130_fd_sc_hd__nand2_2 cells:        3
+ABC RESULTS:   sky130_fd_sc_hd__nand3_2 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__nor2_2 cells:        5
+ABC RESULTS:   sky130_fd_sc_hd__o21a_2 cells:        2
+ABC RESULTS:   sky130_fd_sc_hd__o21ai_2 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__o22a_2 cells:        5
+ABC RESULTS:   sky130_fd_sc_hd__o22ai_2 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__o2bb2a_2 cells:        2
+ABC RESULTS:   sky130_fd_sc_hd__o32a_2 cells:        2
+ABC RESULTS:   sky130_fd_sc_hd__or3_2 cells:        2
+ABC RESULTS:        internal signals:       43
+ABC RESULTS:           input signals:       13
+ABC RESULTS:          output signals:        8
+Removing temp directory.
+Removing global temp directory.
+
+95. Executing SETUNDEF pass (replace undef values with defined constants).
+
+96. Executing HILOMAP pass (mapping to constant drivers).
+
+97. Executing SPLITNETS pass (splitting up multi-bit signals).
+
+98. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \a07_barrel8..
+Removed 0 unused cells and 64 unused wires.
+<suppressed ~1 debug messages>
+
+99. Executing INSBUF pass (insert buffer cells for connected wires).
+
+100. Executing CHECK pass (checking for obvious problems).
+Checking module a07_barrel8...
+Found and reported 0 problems.
+{
+   "creator": "Yosys 0.62 (git sha1 7326bb7d6641500ecb285c291a54a662cb1e76cf, clang++ 21.1.2 -fPIC -O3)",
+   "invocation": "stat -json -liberty /home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/scripts/runs/a07_pd_trial/tmp/0416593c25d64aadbe4acd63b5e50ee9.lib ",
+   "modules": {
+      "\\a07_barrel8": {
+         "num_wires":         54,
+         "num_wire_bits":     71,
+         "num_pub_wires":     4,
+         "num_pub_wire_bits": 21,
+         "num_ports":         4,
+         "num_port_bits":     21,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         58,
+         "num_submodules":       0,
+         "area":              521.750400,
+         "sequential_area":    0.000000,
+         "num_cells_by_type": {
+            "sky130_fd_sc_hd__a21o_2": 1,
+            "sky130_fd_sc_hd__a21oi_2": 6,
+            "sky130_fd_sc_hd__a2bb2o_2": 4,
+            "sky130_fd_sc_hd__a311o_2": 1,
+            "sky130_fd_sc_hd__a31o_2": 1,
+            "sky130_fd_sc_hd__and2_2": 2,
+            "sky130_fd_sc_hd__and2b_2": 5,
+            "sky130_fd_sc_hd__and3_2": 2,
+            "sky130_fd_sc_hd__inv_2": 3,
+            "sky130_fd_sc_hd__mux2_1": 9,
+            "sky130_fd_sc_hd__nand2_2": 3,
+            "sky130_fd_sc_hd__nand3_2": 1,
+            "sky130_fd_sc_hd__nor2_2": 5,
+            "sky130_fd_sc_hd__o21a_2": 2,
+            "sky130_fd_sc_hd__o21ai_2": 1,
+            "sky130_fd_sc_hd__o22a_2": 5,
+            "sky130_fd_sc_hd__o22ai_2": 1,
+            "sky130_fd_sc_hd__o2bb2a_2": 2,
+            "sky130_fd_sc_hd__o32a_2": 2,
+            "sky130_fd_sc_hd__or3_2": 2
+         }
+      }
+   },
+      "design": {
+         "num_wires":         54,
+         "num_wire_bits":     71,
+         "num_pub_wires":     4,
+         "num_pub_wire_bits": 21,
+         "num_ports":         4,
+         "num_port_bits":     21,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         58,
+         "num_submodules":       0,
+         "area":              521.750400,
+         "sequential_area":    0.000000,
+         "num_cells_by_type": {
+            "sky130_fd_sc_hd__a21o_2": 1,
+            "sky130_fd_sc_hd__a21oi_2": 6,
+            "sky130_fd_sc_hd__a2bb2o_2": 4,
+            "sky130_fd_sc_hd__a311o_2": 1,
+            "sky130_fd_sc_hd__a31o_2": 1,
+            "sky130_fd_sc_hd__and2_2": 2,
+            "sky130_fd_sc_hd__and2b_2": 5,
+            "sky130_fd_sc_hd__and3_2": 2,
+            "sky130_fd_sc_hd__inv_2": 3,
+            "sky130_fd_sc_hd__mux2_1": 9,
+            "sky130_fd_sc_hd__nand2_2": 3,
+            "sky130_fd_sc_hd__nand3_2": 1,
+            "sky130_fd_sc_hd__nor2_2": 5,
+            "sky130_fd_sc_hd__o21a_2": 2,
+            "sky130_fd_sc_hd__o21ai_2": 1,
+            "sky130_fd_sc_hd__o22a_2": 5,
+            "sky130_fd_sc_hd__o22ai_2": 1,
+            "sky130_fd_sc_hd__o2bb2a_2": 2,
+            "sky130_fd_sc_hd__o32a_2": 2,
+            "sky130_fd_sc_hd__or3_2": 2
+         }
+      }
+}
+
+101. Printing statistics.
+
+=== a07_barrel8 ===
+
+        +----------Local Count, excluding submodules.
+        |        +-Local Area, excluding submodules.
+        |        | 
+       54        - wires
+       71        - wire bits
+        4        - public wires
+       21        - public wire bits
+        4        - ports
+       21        - port bits
+       58   521.75 cells
+        1    8.758   sky130_fd_sc_hd__a21o_2
+        6    52.55   sky130_fd_sc_hd__a21oi_2
+        4   45.043   sky130_fd_sc_hd__a2bb2o_2
+        1   11.261   sky130_fd_sc_hd__a311o_2
+        1    8.758   sky130_fd_sc_hd__a31o_2
+        2   15.014   sky130_fd_sc_hd__and2_2
+        5   43.792   sky130_fd_sc_hd__and2b_2
+        2   15.014   sky130_fd_sc_hd__and3_2
+        3   11.261   sky130_fd_sc_hd__inv_2
+        9  101.347   sky130_fd_sc_hd__mux2_1
+        3   18.768   sky130_fd_sc_hd__nand2_2
+        1    10.01   sky130_fd_sc_hd__nand3_2
+        5    31.28   sky130_fd_sc_hd__nor2_2
+        2   17.517   sky130_fd_sc_hd__o21a_2
+        1    8.758   sky130_fd_sc_hd__o21ai_2
+        5   50.048   sky130_fd_sc_hd__o22a_2
+        1   12.512   sky130_fd_sc_hd__o22ai_2
+        2   22.522   sky130_fd_sc_hd__o2bb2a_2
+        2   22.522   sky130_fd_sc_hd__o32a_2
+        2   15.014   sky130_fd_sc_hd__or3_2
+
+   Chip area for module '\a07_barrel8': 521.750400
+     of which used for sequential elements: 0.000000 (0.00%)
+
+102. Executing Verilog backend.
+Dumping module `\a07_barrel8'.
+
+103. Executing JSON backend.

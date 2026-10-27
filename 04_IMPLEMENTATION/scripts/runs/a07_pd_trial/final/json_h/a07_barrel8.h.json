@@ -1,0 +1,1218 @@
+{
+  "creator": "Yosys 0.62 (git sha1 7326bb7d6641500ecb285c291a54a662cb1e76cf, clang++ 21.1.2 -fPIC -O3)",
+  "modules": {
+    "a07_barrel8": {
+      "attributes": {
+        "hdlname": "a07_barrel8",
+        "top": "00000000000000000000000000000001",
+        "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_barrel8.sv:28.1-111.10"
+      },
+      "ports": {
+        "din": {
+          "direction": "input",
+          "bits": [ 2, 3, 4, 5, 6, 7, 8, 9 ]
+        },
+        "shamt": {
+          "direction": "input",
+          "bits": [ 10, 11, 12 ]
+        },
+        "mode": {
+          "direction": "input",
+          "bits": [ 13, 14 ]
+        },
+        "dout": {
+          "direction": "output",
+          "bits": [ 15, 16, 17, 18, 19, 20, 21, 22 ]
+        }
+      },
+      "cells": {
+        "$and$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_barrel8.sv:71$1": {
+          "hide_name": 1,
+          "type": "$and",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000001",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000001",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_barrel8.sv:71.19-71.30"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 14 ],
+            "B": [ 13 ],
+            "Y": [ 23 ]
+          }
+        },
+        "$and$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_barrel8.sv:71$2": {
+          "hide_name": 1,
+          "type": "$and",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000001",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000001",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_barrel8.sv:71.19-71.39"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 23 ],
+            "B": [ 9 ],
+            "Y": [ 24 ]
+          }
+        },
+        "$flatten\\u_stage1.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$35": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0" ],
+            "B": [ 3 ],
+            "S": [ 13 ],
+            "Y": [ 25 ]
+          }
+        },
+        "$flatten\\u_stage1.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$37": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 2 ],
+            "B": [ 4 ],
+            "S": [ 13 ],
+            "Y": [ 26 ]
+          }
+        },
+        "$flatten\\u_stage1.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$39": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 3 ],
+            "B": [ 5 ],
+            "S": [ 13 ],
+            "Y": [ 27 ]
+          }
+        },
+        "$flatten\\u_stage1.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$41": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 4 ],
+            "B": [ 6 ],
+            "S": [ 13 ],
+            "Y": [ 28 ]
+          }
+        },
+        "$flatten\\u_stage1.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$43": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 5 ],
+            "B": [ 7 ],
+            "S": [ 13 ],
+            "Y": [ 29 ]
+          }
+        },
+        "$flatten\\u_stage1.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$45": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 6 ],
+            "B": [ 8 ],
+            "S": [ 13 ],
+            "Y": [ 30 ]
+          }
+        },
+        "$flatten\\u_stage1.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$47": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 7 ],
+            "B": [ 9 ],
+            "S": [ 13 ],
+            "Y": [ 31 ]
+          }
+        },
+        "$flatten\\u_stage1.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$49": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 8 ],
+            "B": [ 24 ],
+            "S": [ 13 ],
+            "Y": [ 32 ]
+          }
+        },
+        "$flatten\\u_stage1.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$36": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 2 ],
+            "B": [ 25 ],
+            "S": [ 10 ],
+            "Y": [ 33 ]
+          }
+        },
+        "$flatten\\u_stage1.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$38": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 3 ],
+            "B": [ 26 ],
+            "S": [ 10 ],
+            "Y": [ 34 ]
+          }
+        },
+        "$flatten\\u_stage1.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$40": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 4 ],
+            "B": [ 27 ],
+            "S": [ 10 ],
+            "Y": [ 35 ]
+          }
+        },
+        "$flatten\\u_stage1.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$42": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 5 ],
+            "B": [ 28 ],
+            "S": [ 10 ],
+            "Y": [ 36 ]
+          }
+        },
+        "$flatten\\u_stage1.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$44": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 6 ],
+            "B": [ 29 ],
+            "S": [ 10 ],
+            "Y": [ 37 ]
+          }
+        },
+        "$flatten\\u_stage1.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$46": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 7 ],
+            "B": [ 30 ],
+            "S": [ 10 ],
+            "Y": [ 38 ]
+          }
+        },
+        "$flatten\\u_stage1.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$48": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 8 ],
+            "B": [ 31 ],
+            "S": [ 10 ],
+            "Y": [ 39 ]
+          }
+        },
+        "$flatten\\u_stage1.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$50": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 9 ],
+            "B": [ 32 ],
+            "S": [ 10 ],
+            "Y": [ 40 ]
+          }
+        },
+        "$flatten\\u_stage2.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$19": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0" ],
+            "B": [ 35 ],
+            "S": [ 13 ],
+            "Y": [ 41 ]
+          }
+        },
+        "$flatten\\u_stage2.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$21": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0" ],
+            "B": [ 36 ],
+            "S": [ 13 ],
+            "Y": [ 42 ]
+          }
+        },
+        "$flatten\\u_stage2.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$23": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 33 ],
+            "B": [ 37 ],
+            "S": [ 13 ],
+            "Y": [ 43 ]
+          }
+        },
+        "$flatten\\u_stage2.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$25": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 34 ],
+            "B": [ 38 ],
+            "S": [ 13 ],
+            "Y": [ 44 ]
+          }
+        },
+        "$flatten\\u_stage2.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$27": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 35 ],
+            "B": [ 39 ],
+            "S": [ 13 ],
+            "Y": [ 45 ]
+          }
+        },
+        "$flatten\\u_stage2.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$29": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 36 ],
+            "B": [ 40 ],
+            "S": [ 13 ],
+            "Y": [ 46 ]
+          }
+        },
+        "$flatten\\u_stage2.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$31": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 37 ],
+            "B": [ 24 ],
+            "S": [ 13 ],
+            "Y": [ 47 ]
+          }
+        },
+        "$flatten\\u_stage2.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$33": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 38 ],
+            "B": [ 24 ],
+            "S": [ 13 ],
+            "Y": [ 48 ]
+          }
+        },
+        "$flatten\\u_stage2.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$20": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 33 ],
+            "B": [ 41 ],
+            "S": [ 11 ],
+            "Y": [ 49 ]
+          }
+        },
+        "$flatten\\u_stage2.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$22": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 34 ],
+            "B": [ 42 ],
+            "S": [ 11 ],
+            "Y": [ 50 ]
+          }
+        },
+        "$flatten\\u_stage2.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$24": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 35 ],
+            "B": [ 43 ],
+            "S": [ 11 ],
+            "Y": [ 51 ]
+          }
+        },
+        "$flatten\\u_stage2.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$26": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 36 ],
+            "B": [ 44 ],
+            "S": [ 11 ],
+            "Y": [ 52 ]
+          }
+        },
+        "$flatten\\u_stage2.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$28": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 37 ],
+            "B": [ 45 ],
+            "S": [ 11 ],
+            "Y": [ 53 ]
+          }
+        },
+        "$flatten\\u_stage2.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$30": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 38 ],
+            "B": [ 46 ],
+            "S": [ 11 ],
+            "Y": [ 54 ]
+          }
+        },
+        "$flatten\\u_stage2.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$32": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 39 ],
+            "B": [ 47 ],
+            "S": [ 11 ],
+            "Y": [ 55 ]
+          }
+        },
+        "$flatten\\u_stage2.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$34": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 40 ],
+            "B": [ 48 ],
+            "S": [ 11 ],
+            "Y": [ 56 ]
+          }
+        },
+        "$flatten\\u_stage4.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$11": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 49 ],
+            "B": [ 24 ],
+            "S": [ 13 ],
+            "Y": [ 57 ]
+          }
+        },
+        "$flatten\\u_stage4.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$13": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 50 ],
+            "B": [ 24 ],
+            "S": [ 13 ],
+            "Y": [ 58 ]
+          }
+        },
+        "$flatten\\u_stage4.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$15": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 51 ],
+            "B": [ 24 ],
+            "S": [ 13 ],
+            "Y": [ 59 ]
+          }
+        },
+        "$flatten\\u_stage4.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$17": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 52 ],
+            "B": [ 24 ],
+            "S": [ 13 ],
+            "Y": [ 60 ]
+          }
+        },
+        "$flatten\\u_stage4.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$3": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0" ],
+            "B": [ 53 ],
+            "S": [ 13 ],
+            "Y": [ 61 ]
+          }
+        },
+        "$flatten\\u_stage4.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$5": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0" ],
+            "B": [ 54 ],
+            "S": [ 13 ],
+            "Y": [ 62 ]
+          }
+        },
+        "$flatten\\u_stage4.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$7": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0" ],
+            "B": [ 55 ],
+            "S": [ 13 ],
+            "Y": [ 63 ]
+          }
+        },
+        "$flatten\\u_stage4.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85$9": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:85.28-85.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0" ],
+            "B": [ 56 ],
+            "S": [ 13 ],
+            "Y": [ 64 ]
+          }
+        },
+        "$flatten\\u_stage4.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$10": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 52 ],
+            "B": [ 64 ],
+            "S": [ 12 ],
+            "Y": [ 18 ]
+          }
+        },
+        "$flatten\\u_stage4.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$12": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 53 ],
+            "B": [ 57 ],
+            "S": [ 12 ],
+            "Y": [ 19 ]
+          }
+        },
+        "$flatten\\u_stage4.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$14": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 54 ],
+            "B": [ 58 ],
+            "S": [ 12 ],
+            "Y": [ 20 ]
+          }
+        },
+        "$flatten\\u_stage4.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$16": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 55 ],
+            "B": [ 59 ],
+            "S": [ 12 ],
+            "Y": [ 21 ]
+          }
+        },
+        "$flatten\\u_stage4.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$18": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 56 ],
+            "B": [ 60 ],
+            "S": [ 12 ],
+            "Y": [ 22 ]
+          }
+        },
+        "$flatten\\u_stage4.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$4": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 49 ],
+            "B": [ 61 ],
+            "S": [ 12 ],
+            "Y": [ 15 ]
+          }
+        },
+        "$flatten\\u_stage4.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$6": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 50 ],
+            "B": [ 62 ],
+            "S": [ 12 ],
+            "Y": [ 16 ]
+          }
+        },
+        "$flatten\\u_stage4.$ternary$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92$8": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:92.30-92.49"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 51 ],
+            "B": [ 63 ],
+            "S": [ 12 ],
+            "Y": [ 17 ]
+          }
+        }
+      },
+      "netnames": {
+        "$and$/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_barrel8.sv:71$1_Y": {
+          "hide_name": 1,
+          "bits": [ 23 ],
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_barrel8.sv:71.19-71.30"
+          }
+        },
+        "din": {
+          "hide_name": 0,
+          "bits": [ 2, 3, 4, 5, 6, 7, 8, 9 ],
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_barrel8.sv:29.24-29.27"
+          }
+        },
+        "dout": {
+          "hide_name": 0,
+          "bits": [ 15, 16, 17, 18, 19, 20, 21, 22 ],
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_barrel8.sv:32.24-32.28"
+          }
+        },
+        "fill": {
+          "hide_name": 0,
+          "bits": [ 24 ],
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_barrel8.sv:70.11-70.15"
+          }
+        },
+        "mode": {
+          "hide_name": 0,
+          "bits": [ 13, 14 ],
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_barrel8.sv:31.24-31.28"
+          }
+        },
+        "s1": {
+          "hide_name": 0,
+          "bits": [ 33, 34, 35, 36, 37, 38, 39, 40 ],
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_barrel8.sv:82.17-82.19"
+          }
+        },
+        "s2": {
+          "hide_name": 0,
+          "bits": [ 49, 50, 51, 52, 53, 54, 55, 56 ],
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_barrel8.sv:82.21-82.23"
+          }
+        },
+        "shamt": {
+          "hide_name": 0,
+          "bits": [ 10, 11, 12 ],
+          "attributes": {
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_barrel8.sv:30.24-30.29"
+          }
+        },
+        "u_stage1.sh": {
+          "hide_name": 0,
+          "bits": [ 25, 26, 27, 28, 29, 30, 31, 32 ],
+          "attributes": {
+            "hdlname": "u_stage1 sh",
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:49.17-49.19"
+          }
+        },
+        "u_stage2.sh": {
+          "hide_name": 0,
+          "bits": [ 41, 42, 43, 44, 45, 46, 47, 48 ],
+          "attributes": {
+            "hdlname": "u_stage2 sh",
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:49.17-49.19"
+          }
+        },
+        "u_stage4.sh": {
+          "hide_name": 0,
+          "bits": [ 61, 62, 63, 64, 57, 58, 59, 60 ],
+          "attributes": {
+            "hdlname": "u_stage4 sh",
+            "src": "/home/trantung2006/a07_pkg/A07_Bo_dich_bit_to_hop_barrel_shifter_8bit/04_IMPLEMENTATION/rtl/a07_shift_stage.sv:49.17-49.19"
+          }
+        }
+      }
+    }
+  }
+}

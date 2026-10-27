@@ -1,0 +1,227 @@
+=========== TU CONG VAO: shamt[0]
+Startpoint: shamt[0] (input port clocked by vclk)
+Endpoint: dout[6] (output port clocked by vclk)
+Path Group: vclk
+Path Type: max
+
+  Delay    Time   Description
+---------------------------------------------------------
+   0.00    0.00   clock vclk (rise edge)
+   0.00    0.00   clock network delay (ideal)
+   0.00    0.00 ^ input external delay
+   0.00    0.00 ^ shamt[0] (in)
+   0.02    0.02 v u_stage1/_40_/Y (sky130_fd_sc_hd__nor2_1)
+   0.21    0.23 ^ u_stage1/_41_/Y (sky130_fd_sc_hd__a31oi_1)
+   0.08    0.32 v u_stage2/_28_/Y (sky130_fd_sc_hd__nand2_1)
+   0.22    0.53 ^ u_stage2/_30_/Y (sky130_fd_sc_hd__a31oi_1)
+   0.08    0.61 v u_stage4/_36_/Y (sky130_fd_sc_hd__nand2b_1)
+   0.11    0.72 ^ u_stage4/_38_/Y (sky130_fd_sc_hd__a21oi_1)
+   0.00    0.72 ^ dout[6] (out)
+           0.72   data arrival time
+
+  10.00   10.00   clock vclk (rise edge)
+   0.00   10.00   clock network delay (ideal)
+   0.00   10.00   clock reconvergence pessimism
+   0.00   10.00   output external delay
+          10.00   data required time
+---------------------------------------------------------
+          10.00   data required time
+          -0.72   data arrival time
+---------------------------------------------------------
+           9.28   slack (MET)
+
+
+=========== TU CONG VAO: shamt[1]
+Startpoint: shamt[1] (input port clocked by vclk)
+Endpoint: dout[7] (output port clocked by vclk)
+Path Group: vclk
+Path Type: max
+
+  Delay    Time   Description
+---------------------------------------------------------
+   0.00    0.00   clock vclk (rise edge)
+   0.00    0.00   clock network delay (ideal)
+   0.00    0.00 ^ input external delay
+   0.00    0.00 ^ shamt[1] (in)
+   0.02    0.02 v u_stage2/_33_/Y (sky130_fd_sc_hd__nor2_1)
+   0.19    0.21 ^ u_stage2/_34_/Y (sky130_fd_sc_hd__a31oi_1)
+   0.08    0.29 v u_stage4/_39_/Y (sky130_fd_sc_hd__nand2b_1)
+   0.11    0.40 ^ u_stage4/_41_/Y (sky130_fd_sc_hd__a21oi_1)
+   0.00    0.40 ^ dout[7] (out)
+           0.40   data arrival time
+
+  10.00   10.00   clock vclk (rise edge)
+   0.00   10.00   clock network delay (ideal)
+   0.00   10.00   clock reconvergence pessimism
+   0.00   10.00   output external delay
+          10.00   data required time
+---------------------------------------------------------
+          10.00   data required time
+          -0.40   data arrival time
+---------------------------------------------------------
+           9.60   slack (MET)
+
+
+=========== TU CONG VAO: shamt[2]
+Startpoint: shamt[2] (input port clocked by vclk)
+Endpoint: dout[4] (output port clocked by vclk)
+Path Group: vclk
+Path Type: max
+
+  Delay    Time   Description
+---------------------------------------------------------
+   0.00    0.00   clock vclk (rise edge)
+   0.00    0.00   clock network delay (ideal)
+   0.00    0.00 ^ input external delay
+   0.00    0.00 ^ shamt[2] (in)
+   0.31    0.31 ^ u_stage4/_30_/Y (sky130_fd_sc_hd__a21boi_0)
+   0.10    0.41 v u_stage4/_32_/Y (sky130_fd_sc_hd__a21oi_1)
+   0.00    0.41 v dout[4] (out)
+           0.41   data arrival time
+
+  10.00   10.00   clock vclk (rise edge)
+   0.00   10.00   clock network delay (ideal)
+   0.00   10.00   clock reconvergence pessimism
+   0.00   10.00   output external delay
+          10.00   data required time
+---------------------------------------------------------
+          10.00   data required time
+          -0.41   data arrival time
+---------------------------------------------------------
+           9.59   slack (MET)
+
+
+=========== TU CONG VAO: mode[0]
+Startpoint: mode[0] (input port clocked by vclk)
+Endpoint: dout[6] (output port clocked by vclk)
+Path Group: vclk
+Path Type: max
+
+  Delay    Time   Description
+---------------------------------------------------------
+   0.00    0.00   clock vclk (rise edge)
+   0.00    0.00   clock network delay (ideal)
+   0.00    0.00 v input external delay
+   0.00    0.00 v mode[0] (in)
+   0.12    0.12 v u_stage1/_38_/Y (sky130_fd_sc_hd__nand2b_1)
+   0.24    0.36 ^ u_stage1/_41_/Y (sky130_fd_sc_hd__a31oi_1)
+   0.08    0.44 v u_stage2/_28_/Y (sky130_fd_sc_hd__nand2_1)
+   0.22    0.66 ^ u_stage2/_30_/Y (sky130_fd_sc_hd__a31oi_1)
+   0.08    0.74 v u_stage4/_36_/Y (sky130_fd_sc_hd__nand2b_1)
+   0.11    0.84 ^ u_stage4/_38_/Y (sky130_fd_sc_hd__a21oi_1)
+   0.00    0.85 ^ dout[6] (out)
+           0.85   data arrival time
+
+  10.00   10.00   clock vclk (rise edge)
+   0.00   10.00   clock network delay (ideal)
+   0.00   10.00   clock reconvergence pessimism
+   0.00   10.00   output external delay
+          10.00   data required time
+---------------------------------------------------------
+          10.00   data required time
+          -0.85   data arrival time
+---------------------------------------------------------
+           9.15   slack (MET)
+
+
+=========== TU CONG VAO: mode[1]
+Startpoint: mode[1] (input port clocked by vclk)
+Endpoint: dout[1] (output port clocked by vclk)
+Path Group: vclk
+Path Type: max
+
+  Delay    Time   Description
+---------------------------------------------------------
+   0.00    0.00   clock vclk (rise edge)
+   0.00    0.00   clock network delay (ideal)
+   0.00    0.00 ^ input external delay
+   0.00    0.00 ^ mode[1] (in)
+   0.15    0.15 ^ _0_/X (sky130_fd_sc_hd__and3_1)
+   0.06    0.22 v u_stage1/_51_/Y (sky130_fd_sc_hd__nand2_1)
+   0.20    0.41 ^ u_stage1/_53_/Y (sky130_fd_sc_hd__a31oi_1)
+   0.08    0.49 v u_stage2/_40_/Y (sky130_fd_sc_hd__nand2_1)
+   0.20    0.69 ^ u_stage2/_42_/Y (sky130_fd_sc_hd__a31oi_1)
+   0.09    0.78 v u_stage4/_23_/Y (sky130_fd_sc_hd__nand3_1)
+   0.05    0.83 ^ u_stage4/_24_/Y (sky130_fd_sc_hd__o21ai_0)
+   0.00    0.83 ^ dout[1] (out)
+           0.83   data arrival time
+
+  10.00   10.00   clock vclk (rise edge)
+   0.00   10.00   clock network delay (ideal)
+   0.00   10.00   clock reconvergence pessimism
+   0.00   10.00   output external delay
+          10.00   data required time
+---------------------------------------------------------
+          10.00   data required time
+          -0.83   data arrival time
+---------------------------------------------------------
+           9.17   slack (MET)
+
+
+=========== TU CONG VAO: din[0]
+Startpoint: din[0] (input port clocked by vclk)
+Endpoint: dout[5] (output port clocked by vclk)
+Path Group: vclk
+Path Type: max
+
+  Delay    Time   Description
+---------------------------------------------------------
+   0.00    0.00   clock vclk (rise edge)
+   0.00    0.00   clock network delay (ideal)
+   0.00    0.00 ^ input external delay
+   0.00    0.00 ^ din[0] (in)
+   0.04    0.04 v u_stage1/_26_/Y (sky130_fd_sc_hd__nand2b_1)
+   0.21    0.25 ^ u_stage1/_29_/Y (sky130_fd_sc_hd__a31oi_1)
+   0.08    0.33 v u_stage2/_22_/Y (sky130_fd_sc_hd__clkinv_1)
+   0.21    0.55 ^ u_stage2/_26_/Y (sky130_fd_sc_hd__o21ai_0)
+   0.08    0.63 v u_stage4/_33_/Y (sky130_fd_sc_hd__nand2b_1)
+   0.11    0.74 ^ u_stage4/_35_/Y (sky130_fd_sc_hd__a21oi_1)
+   0.00    0.74 ^ dout[5] (out)
+           0.74   data arrival time
+
+  10.00   10.00   clock vclk (rise edge)
+   0.00   10.00   clock network delay (ideal)
+   0.00   10.00   clock reconvergence pessimism
+   0.00   10.00   output external delay
+          10.00   data required time
+---------------------------------------------------------
+          10.00   data required time
+          -0.74   data arrival time
+---------------------------------------------------------
+           9.26   slack (MET)
+
+
+=========== TU CONG VAO: din[7]
+Startpoint: din[7] (input port clocked by vclk)
+Endpoint: dout[1] (output port clocked by vclk)
+Path Group: vclk
+Path Type: max
+
+  Delay    Time   Description
+---------------------------------------------------------
+   0.00    0.00   clock vclk (rise edge)
+   0.00    0.00   clock network delay (ideal)
+   0.00    0.00 ^ input external delay
+   0.00    0.00 ^ din[7] (in)
+   0.17    0.17 ^ _0_/X (sky130_fd_sc_hd__and3_1)
+   0.06    0.23 v u_stage1/_51_/Y (sky130_fd_sc_hd__nand2_1)
+   0.20    0.42 ^ u_stage1/_53_/Y (sky130_fd_sc_hd__a31oi_1)
+   0.08    0.50 v u_stage2/_40_/Y (sky130_fd_sc_hd__nand2_1)
+   0.20    0.70 ^ u_stage2/_42_/Y (sky130_fd_sc_hd__a31oi_1)
+   0.09    0.80 v u_stage4/_23_/Y (sky130_fd_sc_hd__nand3_1)
+   0.05    0.85 ^ u_stage4/_24_/Y (sky130_fd_sc_hd__o21ai_0)
+   0.00    0.85 ^ dout[1] (out)
+           0.85   data arrival time
+
+  10.00   10.00   clock vclk (rise edge)
+   0.00   10.00   clock network delay (ideal)
+   0.00   10.00   clock reconvergence pessimism
+   0.00   10.00   output external delay
+          10.00   data required time
+---------------------------------------------------------
+          10.00   data required time
+          -0.85   data arrival time
+---------------------------------------------------------
+           9.15   slack (MET)
+
+

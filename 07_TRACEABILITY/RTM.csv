@@ -1,0 +1,11 @@
+req_id,yeu_cau,khoi,bang_chung,dieu_kien_tao_bang_chung,trang_thai,gioi_han
+REQ-A07-001,Chuc nang barrel shifter 8-bit dung de,a07_barrel8,05_VERIFICATION/simulation.log,Icarus Verilog 12.0-3; 8192 to hop + 23 vector co ten,PASS,Mo phong RTL zero-delay; chua co gate-level
+REQ-A07-002,Giao dien dung anh xa chan Charter muc 4,a07_barrel8,02_SPECIFICATION/interface.md,Doi chieu voi cong module trong RTL; 13 vao + 8 ra = 21/24,DAT,
+REQ-A07-003,Mach to hop: 0 o nho,a07_barrel8,06_GDSII/synthesis/synth_stat.txt; 06_GDSII/power/power_report.txt,Yosys 0.52-2: 0 flip-flop; OpenSTA: Sequential 0.0%,PASS,Chua chung minh netlist tuong duong RTL
+REQ-A07-004,Quy mo hop ly cho 1x1 tile,a07_barrel8,06_GDSII/synthesis/synth_stat.txt,Yosys 0.52-2: 86 cell; 425.408 um2,DAT,Chua qua P&R; uoc luong Charter 180-260 cell la tho
+REQ-A07-010,Chay du ca kiem thu bat buoc Charter muc 8,a07_tb,05_VERIFICATION/simulation.log,TC-001..TC-004 (10 vector),PASS,
+REQ-A07-011,Them it nhat hai ca tu xay dung co ca bien,a07_tb,05_VERIFICATION/simulation.log,TC-005..TC-012 (13 vector),PASS,
+REQ-A07-012,Moi khang dinh co bang chung va dieu kien,Toan bo ho so,07_TRACEABILITY/limitations.md,Muc 1 ghi cong cu va phien ban,DAT,
+REQ-A07-013,Co artifact so co chu thich,a07_tb,05_VERIFICATION/simulation.log; 05_VERIFICATION/waveforms/a07_waves.vcd,Dong log in t1 va t2 giua cac tang,DAT,Waveform zero-delay khong chung minh do tre
+REQ-A07-020,Tra loi cau phan tich rieng (3 tang tren duong toi han),u_stage1 u_stage2 u_stage4,06_GDSII/sta/timing_report_max.txt,OpenSTA 2019; vclk 10 ns; 3 tang tren duong din[7]->dout[1] 0.85 ns,DAT,So sau tong hop; chua co RC day; mot goc PVT
+REQ-A07-021,Tra loi cau hoi ky thuat Charter muc 2,Toan bo,implementation-notes_A07.md,So lieu muc 6-8,MOT PHAN,Cau 1 dung so V2 cua goi goc (Yosys 0.33) chua do lai

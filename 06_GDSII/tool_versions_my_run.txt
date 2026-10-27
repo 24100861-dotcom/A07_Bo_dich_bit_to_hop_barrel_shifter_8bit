@@ -1,0 +1,9 @@
+== Phien ban cong cu (may cua toi) ==
+Package: iverilog
+Version: 12.0-3
+Package: yosys
+Version: 0.52-2
+Package: opensta
+Version: 0~20191111gitc018cb2+dfsg-1.1
+Liberty: /home/trantung2006/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+Description:	Ubuntu 26.04.1 LTS

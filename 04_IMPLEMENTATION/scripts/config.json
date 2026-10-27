@@ -1,0 +1,38 @@
+{
+  "project_id": "A07",
+  "title": "Bộ dịch bit tổ hợp (barrel shifter) 8-bit",
+  "group": "A · Số học tổ hợp",
+  "difficulty": "Trung bình",
+  "circuit_type": "Tổ hợp",
+  "charter_scale": "~180–260 cell · 1×1 tile",
+  "top_module": "a07_barrel8",
+  "clock_port": null,
+  "has_clock": false,
+  "expected_ff_zero": true,
+  "technology": "sky130A",
+  "std_cell_library": "sky130_fd_sc_hd",
+  "liberty_corner": "tt_025C_1v80",
+  "flow": "LibreLane/OpenROAD",
+  "measured": {
+    "sim": "PASS",
+    "pyref": "PASS",
+    "synth": "PASS",
+    "sta": "PASS",
+    "cells": 86,
+    "flip_flops": 0,
+    "area_um2": 425.408,
+    "critical_path_ns": 0.85,
+    "startpoint": "din[7]",
+    "endpoint": "dout[1]",
+    "power_total_w": "2.70e-05"
+  },
+  "not_run": [
+    "floorplan",
+    "placement",
+    "routing",
+    "drc",
+    "lvs",
+    "gds"
+  ],
+  "source_dir_origin": "A07_ALU_Implementation_Validation"
+}

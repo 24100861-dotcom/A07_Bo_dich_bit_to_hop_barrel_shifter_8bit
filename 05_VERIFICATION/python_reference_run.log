@@ -1,0 +1,70 @@
+======================================================================
+  A07 . MO HINH CHUAN PYTHON - bo dich bit to hop 8-bit
+  Khong gian dau vao: 256 din x 8 shamt x 4 mode = 8192 to hop
+======================================================================
+
+----------------------------------------------------------------------
+  INV-A . Mo hinh BA TANG == mo hinh TOAN TU tren 8192 to hop
+----------------------------------------------------------------------
+    da so khop : 8192 to hop
+    lech       : 0
+    ==> ba tang 1-2-4 phu du dai 0..7 : DUNG
+
+----------------------------------------------------------------------
+  Ca co ten . Charter muc 8 + ca tu xay dung (23 vector)
+----------------------------------------------------------------------
+    TC-001a dich 0 - SLL               din=10100101 SLL shamt=0 | OUT=10100101  [PASS]
+    TC-001b dich 0 - SRL               din=10100101 SRL shamt=0 | OUT=10100101  [PASS]
+    TC-001c dich 0 - SLA               din=10100101 SLA shamt=0 | OUT=10100101  [PASS]
+    TC-001d dich 0 - SRA               din=10100101 SRA shamt=0 | OUT=10100101  [PASS]
+    TC-002a dich 7 - SLL               din=11111111 SLL shamt=7 | OUT=10000000  [PASS]
+    TC-002b dich 7 - SRL               din=11111111 SRL shamt=7 | OUT=00000001  [PASS]
+    TC-003a SRA bit dau 1              din=10000000 SRA shamt=3 | OUT=11110000  [PASS]
+    TC-003b SRA tang khong lien tiep   din=10110100 SRA shamt=5 | OUT=11111101  [PASS]
+    TC-004a doi chung - SRL            din=10000000 SRL shamt=2 | OUT=00100000  [PASS]
+    TC-004b doi chung - SRA            din=10000000 SRA shamt=2 | OUT=11100000  [PASS]
+    TC-005  BIEN diem bat dong SRA     din=11111111 SRA shamt=7 | OUT=11111111  [PASS]
+    TC-006  BIEN mot bit di len dinh   din=00000001 SLL shamt=7 | OUT=10000000  [PASS]
+    TC-007  BIEN mot bit di xuong day  din=10000000 SRL shamt=7 | OUT=00000001  [PASS]
+    TC-008  BIEN day het ra ngoai      din=11110000 SLL shamt=7 | OUT=00000000  [PASS]
+    TC-009a hoi tu - SRL               din=01111111 SRL shamt=4 | OUT=00000111  [PASS]
+    TC-009b hoi tu - SRA               din=01111111 SRA shamt=4 | OUT=00000111  [PASS]
+    TC-010a bi danh - SLL              din=01011010 SLL shamt=3 | OUT=11010000  [PASS]
+    TC-010b bi danh - SLA              din=01011010 SLA shamt=3 | OUT=11010000  [PASS]
+    TC-011a soi tang 1                 din=00001111 SLL shamt=1 | OUT=00011110  [PASS]
+    TC-011b soi tang 2                 din=00001111 SLL shamt=2 | OUT=00111100  [PASS]
+    TC-011c soi tang 4                 din=00001111 SLL shamt=4 | OUT=11110000  [PASS]
+    TC-011d soi tang 2+4               din=00001111 SLL shamt=6 | OUT=11000000  [PASS]
+    TC-012  mau xen ke                 din=10101010 SRL shamt=1 | OUT=01010101  [PASS]
+
+----------------------------------------------------------------------
+  Bat bien INV-1..INV-9 tren toan bo khong gian dau vao
+----------------------------------------------------------------------
+    INV-1  shamt=0 => dout=din (ca 4 che do)            1024 lan, 0 vi pham
+    INV-2  SLL/SLA => shamt bit thap = 0                4096 lan, 0 vi pham
+    INV-3  SRL     => shamt bit cao  = 0                2048 lan, 0 vi pham
+    INV-4  SRA     => shamt+1 bit cao = din[7]          2048 lan, 0 vi pham
+    INV-5  din[7]=0 => SRA == SRL                       1024 lan, 0 vi pham
+    INV-6  SLA == SLL                                   2048 lan, 0 vi pham
+    INV-7  popcount(dout) <= popcount(din) (SLL/SRL)    4096 lan, 0 vi pham
+    INV-8  SRA so am khong ra so duong; -1 bat dong     1024 lan, 0 vi pham
+    INV-9  dout luon nam tron trong 8 bit               8192 lan, 0 vi pham
+    TONG   so lan kiem bat bien                        25600 lan
+
+----------------------------------------------------------------------
+  Do dinh luong . SRL so voi SRA tren 2048 to hop dich phai
+----------------------------------------------------------------------
+    khac nhau :  896 to hop
+    trung nhau: 1152 to hop  (ly thuyet 128*8 + 128*1 = 1152)
+    ==> chi trung khi din[7]=0 HOAC shamt=0 : DUNG
+
+======================================================================
+  TONG KET
+======================================================================
+  To hop da quet vet can   : 8192
+  Vector co ten            : 23
+  Lan kiem bat bien        : 25600
+  So phep kiem             : 35
+  So phep kiem that bai    : 0
+
+  A07 REFERENCE MODEL: PASS - 35/35 phep kiem dat, 0 sai lech

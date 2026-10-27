@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A07 — Bộ dịch bit tổ hợp (barrel shifter) 8-bit · Ghi chú thực hiện</title>
+<style>
+:root{
+  --bg:#ffffff; --fg:#1a1d21; --muted:#5c6570; --line:#e3e7eb;
+  --accent:#1f5fa9; --accent-soft:#eef4fb; --code-bg:#f5f7f9;
+  --ok:#137a4d; --ok-bg:#e8f6ee; --warn:#8a5a00; --warn-bg:#fdf4e2;
+  --bad:#a52020; --bad-bg:#fceded; --open:#7a5ba8; --open-bg:#f3eefa;
+  --maxw:960px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15181c; --fg:#e6e9ec; --muted:#98a2ad; --line:#2a2f36;
+    --accent:#6fa8e0; --accent-soft:#1c2733; --code-bg:#1b1f24;
+    --ok:#5cc08d; --ok-bg:#16291f; --warn:#d8a54a; --warn-bg:#2a2314;
+    --bad:#e88b8b; --bad-bg:#2b1a1a; --open:#b79ad6; --open-bg:#241d2e;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15181c; --fg:#e6e9ec; --muted:#98a2ad; --line:#2a2f36;
+  --accent:#6fa8e0; --accent-soft:#1c2733; --code-bg:#1b1f24;
+  --ok:#5cc08d; --ok-bg:#16291f; --warn:#d8a54a; --warn-bg:#2a2314;
+  --bad:#e88b8b; --bad-bg:#2b1a1a; --open:#b79ad6; --open-bg:#241d2e;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 16px 96px}
+header.doc{
+  border-bottom:1px solid var(--line); margin-bottom:28px; padding:36px 0 22px;
+}
+header.doc .eyebrow{
+  font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--muted); font-weight:600; margin-bottom:10px;
+}
+header.doc h1{font-size:clamp(24px,4.4vw,34px); line-height:1.25; margin:0 0 14px}
+.badges{display:flex; flex-wrap:wrap; gap:7px; margin-top:6px}
+.badge{
+  font-size:12.5px; padding:3px 10px; border-radius:999px;
+  border:1px solid var(--line); color:var(--muted); background:var(--accent-soft);
+  white-space:nowrap;
+}
+.badge.ok{color:var(--ok); background:var(--ok-bg); border-color:transparent}
+.badge.warn{color:var(--warn); background:var(--warn-bg); border-color:transparent}
+.badge.bad{color:var(--bad); background:var(--bad-bg); border-color:transparent}
+.badge.open{color:var(--open); background:var(--open-bg); border-color:transparent}
+nav.toc{
+  border:1px solid var(--line); border-radius:10px; padding:16px 20px;
+  margin:0 0 32px; background:var(--accent-soft);
+}
+nav.toc p{margin:0 0 8px; font-weight:700; font-size:13px; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--muted)}
+nav.toc ul{margin:0; padding-left:20px}
+nav.toc li{margin:3px 0}
+nav.toc a{color:var(--fg); text-decoration:none}
+nav.toc a:hover{color:var(--accent); text-decoration:underline}
+nav.toc ul ul{padding-left:18px; font-size:14.5px}
+h2{font-size:22px; margin:40px 0 12px; padding-bottom:6px; border-bottom:1px solid var(--line)}
+h3{font-size:18px; margin:28px 0 8px}
+h4{font-size:16px; margin:22px 0 6px; color:var(--muted)}
+p{margin:12px 0}
+a{color:var(--accent)}
+ul,ol{padding-left:24px}
+li{margin:4px 0}
+code{
+  font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  font-size:.9em; background:var(--code-bg); padding:1.5px 5px; border-radius:4px;
+}
+pre{
+  background:var(--code-bg); border:1px solid var(--line); border-radius:8px;
+  padding:14px 16px; overflow-x:auto; line-height:1.55; font-size:13.5px;
+}
+pre code{background:none; padding:0; font-size:inherit}
+blockquote{
+  margin:16px 0; padding:2px 18px; border-left:3px solid var(--accent);
+  background:var(--accent-soft); border-radius:0 8px 8px 0; color:var(--fg);
+}
+blockquote p{margin:10px 0}
+.tablewrap{overflow-x:auto; margin:16px 0; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; font-size:14.5px; min-width:420px}
+th,td{border:1px solid var(--line); padding:7px 11px; text-align:left; vertical-align:top}
+th{background:var(--accent-soft); font-weight:650; white-space:nowrap}
+tbody tr:nth-child(even) td{background:color-mix(in srgb, var(--code-bg) 55%, transparent)}
+hr{border:0; border-top:1px solid var(--line); margin:34px 0}
+footer.doc{
+  margin-top:56px; padding-top:18px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:13.5px;
+}
+.themebtn{
+  position:fixed; right:14px; bottom:14px; z-index:10;
+  border:1px solid var(--line); background:var(--bg); color:var(--muted);
+  border-radius:999px; padding:8px 14px; font-size:13px; cursor:pointer;
+}
+.themebtn:hover{color:var(--fg)}
+@media (max-width:640px){
+  .wrap{padding:0 16px 72px}
+  header.doc{padding:26px 0 18px}
+  nav.toc{padding:14px 16px}
+}
+@media print{
+  .themebtn{display:none}
+  nav.toc{break-inside:avoid}
+  pre,table,blockquote{break-inside:avoid}
+  body{font-size:11pt}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="doc">
+  <div class="eyebrow">RTL2GDS · Đề A07 · Ghi chú thực hiện</div>
+  <h1>A07 — Bộ dịch bit tổ hợp (barrel shifter) 8-bit · Ghi chú thực hiện</h1>
+  <div class="badges"><span class="badge ">🔧 Đã thiết kế lại đúng đề</span><span class="badge ">A · Số học tổ hợp</span><span class="badge ">Độ khó: Trung bình</span><span class="badge ">Loại mạch: Tổ hợp</span><span class="badge ok">Mô phỏng: PASS</span><span class="badge ">Tổng hợp: 75 cell · 0 FF</span><span class="badge ">Đường tới hạn: 0,78 ns</span><span class="badge warn">Physical design: CHƯA CHẠY</span></div>
+</header>
+<nav class="toc"><p>Mục lục</p><ul><li><a href="#1-bai-toan-nay-thuc-chat-la-gi">1. Bài toán này thực chất là gì</a></li><li><a href="#2-ban-chat-ky-thuat-co-che-hoat-dong">2. Bản chất kỹ thuật — cơ chế hoạt động</a></li><ul><li><a href="#2-1-vi-sao-ba-tang-va-vi-sao-dung-ba">2.1 Vì sao ba tầng, và vì sao đúng ba</a></li><li><a href="#2-2-mot-tang-lam-gi">2.2 Một tầng làm gì</a></li><li><a href="#2-3-dich-phai-so-hoc-khac-dich-phai-logic-o-dung-cho-nao">2.3 Dịch phải số học khác dịch phải logic ở đúng chỗ nào</a></li><li><a href="#2-4-vi-sao-sla-sll-va-ma-2-b10-khong-bi-bo-trong">2.4 Vì sao SLA ≡ SLL và mã 2&#x27;b10 không bị bỏ trống</a></li></ul><li><a href="#3-doc-ma-nguon-rtl-lam-gi">3. Đọc mã nguồn: RTL làm gì</a></li><ul><li><a href="#dieu-tuyet-doi-khong-duoc-viet">Điều tuyệt đối không được viết</a></li></ul><li><a href="#4-vi-sao-chon-kien-truc-nay">4. Vì sao chọn kiến trúc này</a></li><li><a href="#5-cach-thuc-hien-lo-trinh-8-buoc">5. Cách thực hiện — lộ trình 8 bước</a></li><li><a href="#6-so-lieu-that-da-do-duoc-va-cach-doc-chung">6. Số liệu thật đã đo được và cách đọc chúng</a></li><ul><li><a href="#tung-con-so-chung-minh-gi-va-khong-chung-minh-gi">Từng con số chứng minh gì — và KHÔNG chứng minh gì</a></li></ul><li><a href="#7-tra-loi-cac-cau-hoi-ky-thuat-cua-charter-muc-2">7. Trả lời các câu hỏi kỹ thuật của Charter (mục 2)</a></li><ul><li><a href="#cau-1-vi-sao-dich-0-7-trong-mot-chu-ky-can-cau-truc-tang-3-tang-1-2-4-chu-khong-phai-8-bo-ghep-kenh">Câu 1 — Vì sao dịch 0–7 trong một chu kỳ cần cấu trúc tầng (3 tầng 1-2-4) chứ không phải 8 bộ ghép kênh?</a></li><li><a href="#cau-2-dich-phai-so-hoc-khac-dich-phai-logic-o-dung-cho-nao-trong-phan-cung">Câu 2 — Dịch phải số học khác dịch phải logic ở đúng chỗ nào trong phần cứng?</a></li><li><a href="#cau-3-duong-toi-han-di-qua-may-tang-ghep-kenh">Câu 3 — Đường tới hạn đi qua mấy tầng ghép kênh?</a></li></ul><li><a href="#8-tra-loi-cau-phan-tich-rieng-charter-muc-9">8. Trả lời câu phân tích riêng (Charter mục 9)</a></li><ul><li><a href="#co-ba-tang-xuat-hien-tren-duong-toi-han-goi-dung-ten-instance">Có. Ba tầng xuất hiện trên đường tới hạn, gọi đúng tên instance.</a></li><li><a href="#do-tre-moi-tang">Độ trễ mỗi tầng</a></li><li><a href="#bon-ket-qua-dang-noi">Bốn kết quả đáng nói</a></li></ul><li><a href="#9-nhung-cho-sinh-vien-hay-sai-va-cach-phat-hien">9. Những chỗ sinh viên hay sai và cách phát hiện</a></li><li><a href="#10-cau-hoi-mentor-nen-dat-khi-bao-ve">10. Câu hỏi mentor nên đặt khi bảo vệ</a></li><li><a href="#11-gioi-han-da-chung-minh-duoc-gi-chua-chung-minh-duoc-gi">11. Giới hạn: đã chứng minh được gì, chưa chứng minh được gì</a></li><ul><li><a href="#da-chung-minh">Đã chứng minh</a></li><li><a href="#chua-chung-minh">Chưa chứng minh</a></li><li><a href="#ngoai-pham-vi-khong-duoc-khang-dinh">Ngoài phạm vi — không được khẳng định</a></li></ul></ul></nav>
+<main>
+<blockquote>
+<p>🟢 <strong>Hồ sơ này mô tả thiết kế ĐÃ LÀM LẠI.</strong> Gói nguồn ban đầu chứa một ALU (<code>a07_alu</code>)
+thuộc danh mục đề cũ, không phải barrel shifter. RTL, mô hình chuẩn và testbench đã được
+viết lại từ đầu; module đỉnh mới là <strong><code>a07_barrel8</code></strong>. Bản gốc đóng băng nguyên vẹn ở
+<code>08_ORIGINAL_SOURCE/</code>. Chi tiết: <code>05_VERIFICATION/known_issues.md</code>.</p>
+</blockquote>
+<hr>
+<h2 id="1-bai-toan-nay-thuc-chat-la-gi">1. Bài toán này thực chất là gì</h2>
+<p>Bề mặt: "dịch một byte đi 0 đến 7 vị trí". Nghe như một dòng code: <code>dout = din &lt;&lt; shamt</code>.</p>
+<p>Thực chất, Charter chọn A07 để dạy một điều mà dòng code đó <strong>che mất hoàn toàn</strong>:</p>
+<blockquote>
+<p><strong>Dịch bit đi một lượng CỐ ĐỊNH là miễn phí. Dịch đi một lượng BIẾN THIÊN thì không.</strong></p>
+</blockquote>
+<p>Dịch trái 3 vị trí, khi 3 là hằng số, tốn <strong>đúng 0 cổng logic</strong> — nó chỉ là cách nối dây
+khác đi. Nhưng khi lượng dịch là một tín hiệu, phần cứng phải <strong>chọn</strong> giữa các cách nối
+dây, và mỗi lựa chọn là một bộ ghép kênh. Toàn bộ diện tích 411,64 µm² của A07 là tiền
+trả cho chữ "chọn" đó — không một cổng nào trong đó thực sự "dịch" cái gì.</p>
+<p>Bối cảnh ứng dụng — <strong>bộ giải mã gói tin</strong> — không phải trang trí. Nó là thứ ép ra kiến
+trúc: lượng lệch của một trường bit chỉ biết được <strong>khi dữ liệu đã tới</strong>, và bộ giải mã
+không được phép dừng dòng dữ liệu. Phải dịch <strong>mọi</strong> lượng trong <strong>một</strong> chu kỳ.</p>
+<h2 id="2-ban-chat-ky-thuat-co-che-hoat-dong">2. Bản chất kỹ thuật — cơ chế hoạt động</h2>
+<h3 id="2-1-vi-sao-ba-tang-va-vi-sao-dung-ba">2.1 Vì sao ba tầng, và vì sao đúng ba</h3>
+<p><code>shamt</code> là một số nhị phân ba bit:</p>
+<pre><code>shamt = 4·shamt[2] + 2·shamt[1] + 1·shamt[0]
+</code></pre>
+<p>Phép dịch có <strong>tính kết hợp</strong>: dịch <code>a</code> rồi dịch <code>b</code> cho kết quả bằng dịch <code>a+b</code>. Ghép hai
+điều này lại:</p>
+<pre><code>din &lt;&lt; shamt  =  ((din &lt;&lt; 1·shamt[0]) &lt;&lt; 2·shamt[1]) &lt;&lt; 4·shamt[2]
+                  └── tầng 1 ──┘  └── tầng 2 ──┘  └── tầng 4 ──┘
+</code></pre>
+<p>Mỗi bit của <code>shamt</code> bật hoặc tắt <strong>đúng một</strong> tầng có lượng dịch bằng trọng số của chính
+bit đó. Vì <code>1 + 2 + 4 = 7</code> phủ trọn dải <code>0…7</code>, ba tầng là <strong>vừa đủ</strong> — không thiếu, không thừa.</p>
+<p>Đây là phép <strong>phân tích nhị phân của bài toán</strong>, y như cách <code>log₂</code> xuất hiện trong mọi
+kiến trúc "chia để trị". Số tầng cho <code>N</code> bit là <code>log₂N</code>: 8 bit → 3 tầng, 32 bit → 5 tầng.</p>
+<h3 id="2-2-mot-tang-lam-gi">2.2 Một tầng làm gì</h3>
+<p>Mỗi tầng là 8 lát cắt độc lập, mỗi lát lo một bit ra. Lát cắt <code>i</code> của tầng dịch <code>S</code>:</p>
+<pre><code>lsh[i]  = (i ≥ S)     ? din[i−S] : 1'b0     ← nhánh dịch trái : CHỈ LÀ DÂY
+rsh[i]  = (i + S ≤ 7) ? din[i+S] : fill     ← nhánh dịch phải : CHỈ LÀ DÂY
+sh[i]   = dir ? rsh[i] : lsh[i]             ← mux 2:1 · chọn CHIỀU
+dout[i] = en  ? sh[i]  : din[i]             ← mux 2:1 · chọn CÓ DỊCH KHÔNG
+</code></pre>
+<p>Hai dòng đầu <strong>không tốn cổng nào</strong>. Hai dòng cuối là toàn bộ chi phí: 2 mux 2:1 mỗi bit,
+16 mux mỗi tầng, 48 mux toàn khối theo mô tả RTL.</p>
+<h3 id="2-3-dich-phai-so-hoc-khac-dich-phai-logic-o-dung-cho-nao">2.3 Dịch phải số học khác dịch phải logic ở đúng chỗ nào</h3>
+<p>Ở <strong>một</strong> dây:</p>
+<pre><code class="language-systemverilog">assign fill = arith &amp; dir &amp; din[7];     // 1 cổng AND3
+</code></pre>
+<p><code>fill</code> là bit được độn vào từ phía MSB. Với SRL nó là <code>0</code>; với SRA nó là <code>din[7]</code>. Mọi
+thứ khác trong ba tầng <strong>giống hệt nhau</strong>.</p>
+<p>Điểm tinh tế: <code>fill</code> lấy từ <code>din[7]</code> <strong>gốc</strong>, không lấy từ MSB của tầng trước. Cả hai cách
+đều cho kết quả đúng (vì với SRA, MSB mọi tầng trung gian đã bằng <code>din[7]</code>), nhưng cách
+đã chọn giữ <code>fill</code> <strong>song song</strong> với chuỗi ba tầng thay vì nối tiếp vào nó.</p>
+<h3 id="2-4-vi-sao-sla-sll-va-ma-2-b10-khong-bi-bo-trong">2.4 Vì sao <code>SLA ≡ SLL</code> và mã <code>2'b10</code> không bị bỏ trống</h3>
+<p><code>mode</code> có 2 bit ⟹ 4 mã, nhưng Charter chỉ nêu ba chế độ. Mã <code>2'b10</code> được định nghĩa
+<strong>tường minh</strong> là bí danh của SLL, vì:</p>
+<ul>
+<li>Dịch trái đẩy bit dấu <strong>ra khỏi</strong> từ — không còn gì để "nối dài dấu". Mọi kiến trúc tập
+  lệnh thực dụng đều không có lệnh dịch trái số học riêng vì đúng lý do này.</li>
+<li>Charter mục 3 xếp <strong>rotate ngoài phạm vi</strong>, nên không được lấy mã này cho rotate.</li>
+<li>Để mã trống ⟹ nhánh <code>case</code> không đủ ⟹ <strong>suy ra latch</strong> hoặc sinh <code>X</code>. Cả hai đều vi
+  phạm Charter mục 10.</li>
+</ul>
+<p>Bất biến <strong>INV-6</strong> khoá định nghĩa này, và TC-010 kiểm nó bằng vector thật.</p>
+<h2 id="3-doc-ma-nguon-rtl-lam-gi">3. Đọc mã nguồn: RTL làm gì</h2>
+<p>Toàn bộ kiến trúc nằm trong ba lời gọi module:</p>
+<pre><code class="language-systemverilog">assign fill = arith &amp; dir &amp; din[7];
+
+a07_shift_stage #(.S(1)) u_stage1 (.din(din), .en(shamt[0]), .dir(dir), .fill(fill), .dout(s1));
+a07_shift_stage #(.S(2)) u_stage2 (.din(s1),  .en(shamt[1]), .dir(dir), .fill(fill), .dout(s2));
+a07_shift_stage #(.S(4)) u_stage4 (.din(s2),  .en(shamt[2]), .dir(dir), .fill(fill), .dout(dout));
+</code></pre>
+<p>Và bên trong một tầng:</p>
+<pre><code class="language-systemverilog">genvar i;
+generate
+    for (i = 0; i &lt; 8; i = i + 1) begin : GEN_BIT
+        if (i &gt;= S)     assign lsh[i] = din[i-S]; else assign lsh[i] = 1'b0;
+        if (i + S &lt;= 7) assign rsh[i] = din[i+S]; else assign rsh[i] = fill;
+        assign sh[i]   = dir ? rsh[i] : lsh[i];
+        assign dout[i] = en  ? sh[i]  : din[i];
+    end
+endgenerate
+</code></pre>
+<p>Bốn điểm cần giảng kỹ:</p>
+<ol>
+<li><strong><code>generate for</code> là nhân bản KHÔNG GIAN.</strong> Nó tạo 8 lát cắt phần cứng tồn tại <strong>đồng
+   thời</strong>, không phải 8 lần chạy tuần tự. Sinh viên quen lập trình phần mềm gần như luôn
+   hiểu nhầm chỗ này.</li>
+<li><strong><code>if (i &gt;= S)</code> là <code>if</code> LÚC BIÊN DỊCH, không phải mux.</strong> Nó quyết định <strong>có nối dây hay
+   không</strong>, chứ không tạo ra cổng logic nào. Đây là chỗ khác biệt cốt tử giữa <code>generate if</code>
+   và <code>if</code> trong <code>always_comb</code>.</li>
+<li><strong>Một module tham số hoá dùng cho cả ba tầng.</strong> Ba tầng chỉ khác nhau ở <code>S</code>. Yosys vẫn
+   giữ chúng thành ba instance tách biệt trong báo cáo phân cấp — đó chính là bằng chứng
+   cấu trúc mà Charter mục 10 đòi.</li>
+<li><strong>Không có <code>always_comb</code> nào trong RTL.</strong> Toàn bộ là <code>assign</code> liên tục, nên <strong>không tồn
+   tại</strong> khả năng thiếu gán ⟹ không thể suy ra latch. Đây là cách phòng latch mạnh hơn
+   "nhớ gán giá trị mặc định".</li>
+</ol>
+<h3 id="dieu-tuyet-doi-khong-duoc-viet">Điều tuyệt đối không được viết</h3>
+<pre><code class="language-systemverilog">assign dout = din &lt;&lt; shamt;          // ❌ CẤM
+case (shamt) 3'd0: ... 3'd7: ...     // ❌ CẤM — đúng cái bẫy Charter mục 10
+</code></pre>
+<p>Toán tử tắt cho phép công cụ <strong>tự chọn</strong> kiến trúc, tức <strong>xoá mất</strong> chính thứ Charter mục 9
+yêu cầu quan sát. Toán tử dịch chỉ được dùng trong <code>05_VERIFICATION/golden_model/</code>.</p>
+<h2 id="4-vi-sao-chon-kien-truc-nay">4. Vì sao chọn kiến trúc này</h2>
+<p>Không phải vì "ba tầng là chuẩn", mà vì đo ra nó thắng:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align: right;">V1 ba tầng (chọn)</th>
+<th style="text-align: right;">V2 case 8 nhánh</th>
+<th style="text-align: right;">V3 đảo-dịch-đảo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Diện tích</td>
+<td style="text-align: right;"><strong>411,64 µm²</strong></td>
+<td style="text-align: right;">480,46 µm² (+16,7 %)</td>
+<td style="text-align: right;">456,69 µm² (+10,9 %)</td>
+</tr>
+<tr>
+<td>Độ trễ</td>
+<td style="text-align: right;"><strong>0,78 ns</strong></td>
+<td style="text-align: right;">1,21 ns (+55,1 %)</td>
+<td style="text-align: right;">1,45 ns (+85,9 %)</td>
+</tr>
+<tr>
+<td>Đúng chức năng</td>
+<td style="text-align: right;">✅ 8192/8192</td>
+<td style="text-align: right;">✅ 8192/8192</td>
+<td style="text-align: right;">✅ 8192/8192</td>
+</tr>
+</tbody>
+</table></div>
+<p>Cả ba <strong>tương đương chức năng hoàn toàn</strong> — chúng là ba lựa chọn thật, và V1 thắng trên
+<strong>cả hai</strong> trục. Phân tích đầy đủ, kèm hai phương án bóc tách chi phí: <code>03_ARCHITECTURE/tradeoff.md</code>.</p>
+<p>Với ứng dụng giải mã gói tin, tiêu chí quyết định là:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Tiêu chí ứng dụng</th>
+<th>V1 đáp ứng?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mọi lượng dịch trong <strong>một</strong> chu kỳ</td>
+<td>✅ 0,78 ns, tổ hợp thuần</td>
+</tr>
+<tr>
+<td>Thông lượng <strong>cố định</strong> một byte/chu kỳ</td>
+<td>✅ Không trạng thái, không vòng lặp</td>
+</tr>
+<tr>
+<td>0 ô nhớ (Charter mục 10)</td>
+<td>✅ 0 flip-flop</td>
+</tr>
+<tr>
+<td>Netlist thấy rõ ba tầng (Charter mục 10)</td>
+<td>✅ Ba instance có tên, xuất hiện trên đường tới hạn</td>
+</tr>
+<tr>
+<td>Quy mô 1×1 tile</td>
+<td>✅ 75 cell — dưới ước lượng 180–260 của Charter</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="5-cach-thuc-hien-lo-trinh-8-buoc">5. Cách thực hiện — lộ trình 8 bước</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Bước</th>
+<th>Công cụ</th>
+<th>Bằng chứng sinh ra</th>
+<th>Trạng thái</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Suy bảng hành vi từ Charter mục 1, 4, 8</td>
+<td>—</td>
+<td><code>02_SPECIFICATION/functional_spec.md</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Viết <strong>hai</strong> mô hình Python: toán tử và ba tầng, chứng minh chúng trùng nhau</td>
+<td>CPython 3.11.15</td>
+<td><code>reference_model.py</code> thoát 0</td>
+<td>✅ PASS</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Viết RTL ba tầng <strong>tường minh</strong></td>
+<td>—</td>
+<td><code>04_IMPLEMENTATION/rtl/</code> (2 file)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Viết testbench tự kiểm 3 lớp + quét vét cạn</td>
+<td>Icarus Verilog 12.0</td>
+<td><code>simulation.log</code></td>
+<td>✅ 8 215 vector / <strong>0 lỗi</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Tổng hợp lên sky130, <strong>kiểm 0 flip-flop</strong></td>
+<td>Yosys 0.33</td>
+<td>bảng cell</td>
+<td>✅ 75 cell · <strong>0 FF</strong></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Tổng hợp thêm <strong>4 phương án đối chứng</strong> để so bằng số</td>
+<td>Yosys 0.33</td>
+<td><code>tradeoff.md</code> §2</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>7</td>
+<td>STA với clock ảo, <strong>đếm tầng trên đường tới hạn</strong></td>
+<td>OpenSTA</td>
+<td><code>datapath.md</code> §5</td>
+<td>✅ 0,78 ns · 3 tầng</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Physical design RTL→GDSII</td>
+<td>LibreLane + sky130A</td>
+<td><code>06_GDSII/</code></td>
+<td>⬜ <strong>chưa chạy</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Bước 2 đáng nói riêng: mô hình <strong>ba tầng</strong> bằng Python được viết <strong>trước khi</strong> động đến
+Verilog, và được chứng minh trùng khít mô hình toán tử trên cả 8 192 tổ hợp. Nhờ đó, khi
+RTL sai thì biết chắc lỗi ở <strong>hiện thực</strong>, không phải ở <strong>ý tưởng kiến trúc</strong>.</p>
+<h2 id="6-so-lieu-that-da-do-duoc-va-cach-doc-chung">6. Số liệu thật đã đo được và cách đọc chúng</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Chỉ số</th>
+<th style="text-align: right;">Giá trị</th>
+<th>Công cụ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mô hình chuẩn Python</td>
+<td style="text-align: right;"><strong>PASS</strong>, thoát 0</td>
+<td>CPython 3.11.15</td>
+</tr>
+<tr>
+<td>Vector mô phỏng</td>
+<td style="text-align: right;"><strong>8 215</strong>, sai lệch <strong>0</strong></td>
+<td>Icarus Verilog 12.0</td>
+</tr>
+<tr>
+<td>Lần kiểm bất biến</td>
+<td style="text-align: right;"><strong>17 458</strong>, vi phạm <strong>0</strong></td>
+<td>Icarus Verilog 12.0</td>
+</tr>
+<tr>
+<td>Cảnh báo biên dịch</td>
+<td style="text-align: right;"><strong>0</strong></td>
+<td>Icarus Verilog 12.0</td>
+</tr>
+<tr>
+<td>Số cell</td>
+<td style="text-align: right;"><strong>75</strong></td>
+<td>Yosys 0.33 + sky130_fd_sc_hd</td>
+</tr>
+<tr>
+<td><strong>Flip-flop</strong></td>
+<td style="text-align: right;"><strong>0</strong></td>
+<td>Yosys 0.33</td>
+</tr>
+<tr>
+<td>Diện tích</td>
+<td style="text-align: right;"><strong>411,6448 µm²</strong></td>
+<td>Yosys 0.33</td>
+</tr>
+<tr>
+<td>— <code>u_stage1</code> (S=1)</td>
+<td style="text-align: right;">24 cell · 143,8880 µm²</td>
+<td>Yosys 0.33</td>
+</tr>
+<tr>
+<td>— <code>u_stage2</code> (S=2)</td>
+<td style="text-align: right;">25 cell · 138,8832 µm²</td>
+<td>Yosys 0.33</td>
+</tr>
+<tr>
+<td>— <code>u_stage4</code> (S=4)</td>
+<td style="text-align: right;">25 cell · 122,6176 µm²</td>
+<td>Yosys 0.33</td>
+</tr>
+<tr>
+<td>— mức đỉnh (<code>and3_1</code> sinh <code>fill</code>)</td>
+<td style="text-align: right;">1 cell · 6,2560 µm²</td>
+<td>Yosys 0.33</td>
+</tr>
+<tr>
+<td>Đường tới hạn</td>
+<td style="text-align: right;"><code>din[7] → dout[1]</code>, <strong>7 cell</strong></td>
+<td>OpenSTA</td>
+</tr>
+<tr>
+<td><strong>Độ trễ tổ hợp</strong></td>
+<td style="text-align: right;"><strong>0,78 ns</strong></td>
+<td>OpenSTA</td>
+</tr>
+<tr>
+<td>Đường nhanh nhất</td>
+<td style="text-align: right;"><code>shamt[2] → dout[0]</code>, <strong>0,03 ns</strong></td>
+<td>OpenSTA</td>
+</tr>
+<tr>
+<td>Slack</td>
+<td style="text-align: right;"><strong>9,22 ns (MET)</strong> · WNS 0,00 · TNS 0,00</td>
+<td>OpenSTA</td>
+</tr>
+<tr>
+<td>Công suất</td>
+<td style="text-align: right;"><strong>1,35·10⁻⁵ W</strong> — tổ hợp <strong>100,0 %</strong>, tuần tự <strong>0,0 %</strong></td>
+<td>OpenSTA</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="tung-con-so-chung-minh-gi-va-khong-chung-minh-gi">Từng con số chứng minh gì — và KHÔNG chứng minh gì</h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Con số</th>
+<th><strong>Chứng minh</strong></th>
+<th><strong>KHÔNG chứng minh</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8 192/8 192 khớp</td>
+<td>Hàm của DUT <strong>tương đương</strong> golden model. Không còn ca hành vi nào chưa kiểm.</td>
+<td>Kiến trúc là ba tầng. V2 (<code>case</code> 8 nhánh) cũng PASS 8 192/8 192.</td>
+</tr>
+<tr>
+<td>0 flip-flop</td>
+<td>Đúng phân loại Tổ hợp, xác nhận bởi <strong>hai nguồn độc lập</strong> (bảng cell Yosys + công suất Sequential 0,0 % của OpenSTA)</td>
+<td>Netlist tương đương RTL về chức năng — cần mô phỏng gate-level</td>
+</tr>
+<tr>
+<td>75 cell · 411,64 µm²</td>
+<td>Kiến trúc tầng <strong>nhỏ</strong> — dưới hẳn ước lượng 180–260 cell của Charter</td>
+<td>Diện tích sau P&amp;R — sẽ khác vì có dây và có cell bị <code>dont_use</code></td>
+</tr>
+<tr>
+<td>0,78 ns</td>
+<td>Độ trễ <strong>ở mức sau tổng hợp</strong>, một góc PVT</td>
+<td>Độ trễ thật sau routing (sẽ <strong>lớn hơn</strong>, chưa có RC dây)</td>
+</tr>
+<tr>
+<td>Ba tầng trên đường tới hạn</td>
+<td>Cấu trúc ba tầng <strong>có thật trong mạch đã tổng hợp</strong>, không chỉ trong RTL</td>
+<td>Rằng nó sẽ còn nguyên sau P&amp;R</td>
+</tr>
+<tr>
+<td>1,35·10⁻⁵ W</td>
+<td>Thứ tự độ lớn công suất</td>
+<td>Công suất thật của ứng dụng — dùng activity mặc định, không lấy từ VCD</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="7-tra-loi-cac-cau-hoi-ky-thuat-cua-charter-muc-2">7. Trả lời các câu hỏi kỹ thuật của Charter (mục 2)</h2>
+<h3 id="cau-1-vi-sao-dich-0-7-trong-mot-chu-ky-can-cau-truc-tang-3-tang-1-2-4-chu-khong-phai-8-bo-ghep-kenh">Câu 1 — Vì sao dịch 0–7 trong một chu kỳ cần cấu trúc tầng (3 tầng 1-2-4) chứ không phải 8 bộ ghép kênh?</h3>
+<p><strong>Phương án "8 bộ ghép kênh" đã được dựng thật và đo thật</strong> — đó chính là V2 (<code>case (shamt)</code>
+8 nhánh) trong <code>tradeoff.md</code> §3.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align: right;">Ba tầng (V1)</th>
+<th style="text-align: right;">8 nhánh phẳng (V2)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Diện tích</td>
+<td style="text-align: right;"><strong>411,6448 µm²</strong></td>
+<td style="text-align: right;"><strong>480,4608 µm²</strong></td>
+</tr>
+<tr>
+<td>Độ trễ</td>
+<td style="text-align: right;"><strong>0,78 ns</strong></td>
+<td style="text-align: right;"><strong>1,21 ns</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Phẳng đắt hơn 16,7 % và chậm hơn 55,1 %.</strong> Charter mục 10 nói đúng.</p>
+<p>Nhưng câu trả lời đầy đủ phải nói thêm hai điều:</p>
+<p><strong>① Ở <code>N = 8</code>, chênh lệch không lớn như lý thuyết hứa.</strong> Lý thuyết: phẳng cần
+<code>N(N−1) = 56</code> mux, tầng cần <code>N·log₂N = 24</code> mux — tỉ lệ 2,3×. Đo thật: 1,17×. Vì rất nhiều
+nhánh của <code>case</code> có toán hạng là hằng số 0 và <code>abc</code> rút gọn chúng đi.</p>
+<p><strong>② Lý do thật để dùng kiến trúc tầng là độ co giãn, không phải con số 16,7 %:</strong></p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th style="text-align: right;"><code>N</code></th>
+<th style="text-align: right;">Tầng: <code>N·log₂N</code></th>
+<th style="text-align: right;">Phẳng: <code>N(N−1)</code></th>
+<th style="text-align: right;">Tỉ lệ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">2,3×</td>
+</tr>
+<tr>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">992</td>
+<td style="text-align: right;"><strong>6,2×</strong></td>
+</tr>
+<tr>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">384</td>
+<td style="text-align: right;">4 032</td>
+<td style="text-align: right;"><strong>10,5×</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><code>O(N log N)</code> so với <code>O(N²)</code>. Ở <code>N = 8</code> khoảng cách còn khiêm tốn; ở <code>N = 64</code> nó là một
+bậc độ lớn. A07 chọn <code>N = 8</code> vì đó là cỡ nhỏ nhất mà <strong>ba tầng còn nhìn thấy được</strong>.</p>
+<h3 id="cau-2-dich-phai-so-hoc-khac-dich-phai-logic-o-dung-cho-nao-trong-phan-cung">Câu 2 — Dịch phải số học khác dịch phải logic ở đúng chỗ nào trong phần cứng?</h3>
+<p><strong>Ở đúng một dây: bit độn <code>fill</code>.</strong></p>
+<pre><code class="language-systemverilog">assign fill = arith &amp; dir &amp; din[7];   // SRA: fill = din[7]   ·   SRL: fill = 0
+</code></pre>
+<p>Ba tầng hoàn toàn giống nhau ở hai chế độ; chỉ giá trị độn vào từ phía MSB là khác.</p>
+<p><strong>Bằng chứng hành vi.</strong> TC-004: cùng <code>din=0x80</code>, cùng <code>shamt=2</code>, chỉ đổi <code>mode</code> —
+SRL cho <code>0x20</code>, SRA cho <code>0xE0</code>. Mọi biến khác giữ nguyên nên chênh lệch <strong>chỉ có thể</strong> đến
+từ bit độn. Đo trên toàn không gian: trong 2 048 tổ hợp dịch phải, hai chế độ khác nhau ở
+<strong>896</strong> tổ hợp và trùng nhau ở <strong>1 152</strong> tổ hợp — đúng bằng <code>128×8 + 128×1</code> (mọi <code>din</code> có
+bit dấu 0, cộng mọi <code>din</code> âm nhưng <code>shamt = 0</code>).</p>
+<p><strong>Bằng chứng chi phí — và đây là chỗ trực giác sai.</strong> Nhìn RTL thì SRA "chỉ tốn một cổng
+AND3". Tổng hợp lại hai phiên bản cùng kiến trúc, chỉ khác có SRA hay không:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Phiên bản</th>
+<th style="text-align: right;">Cell</th>
+<th style="text-align: right;">Diện tích</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chỉ SLL + SRL (V4)</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">360,3456 µm²</td>
+</tr>
+<tr>
+<td>Có thêm SRA (V1)</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">411,6448 µm²</td>
+</tr>
+<tr>
+<td><strong>Chênh</strong></td>
+<td style="text-align: right;"><strong>+15 cell</strong></td>
+<td style="text-align: right;"><strong>+51,30 µm² · +14,2 %</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Gấp mười lần ước lượng "một cổng".</strong> Vì khi bỏ SRA, <code>fill</code> thành hằng số 0, và <strong>bảy</strong>
+lát cắt trên đỉnh của ba tầng thoái hoá từ "chọn giữa hai tín hiệu sống" xuống "AND với
+hằng số". Chi phí thật của SRA không nằm ở cổng sinh <code>fill</code> mà ở chỗ nó <strong>biến 7 nút hằng
+số thành 7 nút sống</strong> lan khắp ba tầng.</p>
+<h3 id="cau-3-duong-toi-han-di-qua-may-tang-ghep-kenh">Câu 3 — Đường tới hạn đi qua mấy tầng ghép kênh?</h3>
+<p><strong>Đủ cả ba tầng, cộng một cổng sinh <code>fill</code> nằm ngoài chúng.</strong> Xem §8.</p>
+<h2 id="8-tra-loi-cau-phan-tich-rieng-charter-muc-9">8. Trả lời câu phân tích riêng (Charter mục 9)</h2>
+<blockquote>
+<p><em>"Barrel shifter được dựng thành 3 tầng ghép kênh (dịch 1, 2, 4). Kiểm chứng cấu trúc
+3 tầng này có xuất hiện trong đường tới hạn của báo cáo STA không, và độ trễ mỗi tầng
+khoảng bao nhiêu."</em></p>
+</blockquote>
+<h3 id="co-ba-tang-xuat-hien-tren-duong-toi-han-goi-dung-ten-instance">Có. Ba tầng xuất hiện trên đường tới hạn, gọi đúng tên instance.</h3>
+<pre><code>Startpoint: din[7]      Endpoint: dout[1]      Độ trễ: 0,78 ns      Slack: 9,22 ns (MET)
+</code></pre>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Mốc</th>
+<th>Cell</th>
+<th>Thuộc</th>
+<th style="text-align: right;">Độ trễ</th>
+<th style="text-align: right;">Cộng dồn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>_0_</code></td>
+<td><code>and3_1</code></td>
+<td>mức đỉnh — sinh <code>fill</code></td>
+<td style="text-align: right;">0,16</td>
+<td style="text-align: right;">0,16</td>
+</tr>
+<tr>
+<td><code>u_stage1/_37_</code></td>
+<td><code>mux2i_1</code></td>
+<td><strong>u_stage1</strong></td>
+<td style="text-align: right;">0,07</td>
+<td style="text-align: right;">0,23</td>
+</tr>
+<tr>
+<td><code>u_stage1/_39_</code></td>
+<td><code>a21oi_1</code></td>
+<td><strong>u_stage1</strong></td>
+<td style="text-align: right;">0,17</td>
+<td style="text-align: right;">0,40</td>
+</tr>
+<tr>
+<td><code>u_stage2/_32_</code></td>
+<td><code>mux2i_1</code></td>
+<td><strong>u_stage2</strong></td>
+<td style="text-align: right;">0,09</td>
+<td style="text-align: right;">0,49</td>
+</tr>
+<tr>
+<td><code>u_stage2/_34_</code></td>
+<td><code>a21oi_1</code></td>
+<td><strong>u_stage2</strong></td>
+<td style="text-align: right;">0,17</td>
+<td style="text-align: right;">0,66</td>
+</tr>
+<tr>
+<td><code>u_stage4/_23_</code></td>
+<td><code>nand3_1</code></td>
+<td><strong>u_stage4</strong></td>
+<td style="text-align: right;">0,08</td>
+<td style="text-align: right;">0,74</td>
+</tr>
+<tr>
+<td><code>u_stage4/_24_</code></td>
+<td><code>o21ai_0</code></td>
+<td><strong>u_stage4</strong></td>
+<td style="text-align: right;">0,04</td>
+<td style="text-align: right;"><strong>0,78</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Thứ tự <code>u_stage1 → u_stage2 → u_stage4</code> khớp <strong>chính xác</strong> thứ tự mắc trong RTL.</p>
+<h3 id="do-tre-moi-tang">Độ trễ mỗi tầng</h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Đoạn</th>
+<th style="text-align: right;">Cell</th>
+<th style="text-align: right;">Độ trễ</th>
+<th style="text-align: right;">Tỉ lệ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sinh <code>fill</code> (<strong>ngoài</strong> ba tầng)</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0,16 ns</td>
+<td style="text-align: right;">20,5 %</td>
+</tr>
+<tr>
+<td><code>u_stage1</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0,24 ns</td>
+<td style="text-align: right;">30,8 %</td>
+</tr>
+<tr>
+<td><code>u_stage2</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0,26 ns</td>
+<td style="text-align: right;">33,3 %</td>
+</tr>
+<tr>
+<td><code>u_stage4</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0,12 ns</td>
+<td style="text-align: right;">15,4 %</td>
+</tr>
+<tr>
+<td><strong>Tổng</strong></td>
+<td style="text-align: right;"><strong>7</strong></td>
+<td style="text-align: right;"><strong>0,78 ns</strong></td>
+<td style="text-align: right;">100 %</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Độ trễ trung bình mỗi tầng ≈ 0,21 ns</strong> (<code>(0,78 − 0,16)/3</code>). Mỗi tầng đúng <strong>2 cell</strong> —
+khớp với thiết kế "2 mức mux 2:1 mỗi tầng".</p>
+<h3 id="bon-ket-qua-dang-noi">Bốn kết quả đáng nói</h3>
+<p><strong>① Đường tới hạn bắt đầu ở <code>din[7]</code>, không ở <code>shamt[0]</code>.</strong> Trái trực giác — người ta
+mong tín hiệu điều khiển của tầng đầu tiên là chậm nhất. Thực tế <code>shamt[0]</code> chỉ mất
+0,64 ns, còn <code>din[7]</code> mất 0,78 ns, vì <code>din[7]</code> phải đi qua cổng <code>and3_1</code> sinh <code>fill</code>
+(0,16 ns) <strong>trước khi</strong> vào tầng 1. <strong>Đường tới hạn là đường của tính năng dịch phải số
+học</strong>, không phải đường dữ liệu thường.</p>
+<p><strong>② Độ trễ các tầng KHÔNG đều, và tầng cuối rẻ nhất.</strong> 0,24 / 0,26 / 0,12 ns. Tầng <code>S=4</code>
+nhanh hơn hẳn vì <strong>mọi</strong> lát cắt của nó đều có một nhánh suy biến (nửa dưới độn hằng số 0,
+nửa trên độn <code>fill</code>), nên sau tổng hợp nó <strong>không còn cell mux nào</strong> — toàn <code>nand3</code>/<code>o21ai</code>.
+Cùng lý do, nó cũng là tầng có <strong>diện tích nhỏ nhất</strong>: 122,6176 µm² so với 143,8880 µm²
+của tầng <code>S=1</code>. <strong>Tầng dịch xa nhất lại là tầng rẻ nhất và nhanh nhất.</strong></p>
+<p><strong>③ "Ba tầng phải tạo thành cái thang đều" là sai.</strong> Đo độ trễ xấu nhất từ từng bit điều khiển:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Cổng vào</th>
+<th style="text-align: center;">Số tầng phải qua</th>
+<th style="text-align: right;">Độ trễ xấu nhất</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>shamt[0]</code></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: right;"><strong>0,64 ns</strong></td>
+</tr>
+<tr>
+<td><code>shamt[1]</code></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: right;">0,37 ns</td>
+</tr>
+<tr>
+<td><code>shamt[2]</code></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: right;"><strong>0,38 ns</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><code>shamt[0]</code> đúng là chậm hơn hẳn, nhưng <code>shamt[1]</code> và <code>shamt[2]</code> <strong>ngang nhau</strong> — thậm chí
+<code>shamt[2]</code>, bit đi qua <strong>ít</strong> tầng nhất, còn nhỉnh hơn một chút. Vì <code>shamt[2]</code> có fanout 8,
+phải lái cả tám lát cắt của tầng cuối. <strong>Số mức logic không phải là độ trễ</strong>; tải điện dung
+và lựa chọn cell cũng quan trọng không kém. Đây đúng là lý do Charter mục 9 đòi <strong>số liệu</strong>
+chứ không đòi lý luận.</p>
+<p><strong>④ Chênh nhanh/chậm 26× trên cùng netlist.</strong> <code>shamt[2] → dout[0]</code> mất 0,03 ns;
+<code>din[7] → dout[1]</code> mất 0,78 ns. Cùng thư viện, cùng netlist, khác nhau 26 lần — con số
+này nói lên bản chất kiến trúc tầng: không phải đầu vào nào cũng "xa" đầu ra như nhau.</p>
+<h2 id="9-nhung-cho-sinh-vien-hay-sai-va-cach-phat-hien">9. Những chỗ sinh viên hay sai và cách phát hiện</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Sai lầm</th>
+<th>Hậu quả</th>
+<th>Phát hiện bằng bằng chứng nào</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Viết <code>assign dout = din &lt;&lt; shamt;</code> cho gọn</td>
+<td>Mất kiến trúc; không đếm được tầng trên đường tới hạn</td>
+<td>Đọc RTL; STA sẽ không có tên <code>u_stage*</code> nào trên đường tới hạn</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Viết <code>case (shamt)</code> 8 nhánh</td>
+<td>Đúng cái bẫy Charter mục 10</td>
+<td>Đo: +16,7 % diện tích, +55,1 % độ trễ (<code>tradeoff.md</code> §3)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Kết luận "V2 nhỏ hơn" vì nó có <strong>ít cell hơn</strong> (69 &lt; 75)</td>
+<td>Kết luận ngược hoàn toàn</td>
+<td>So <strong>diện tích</strong>: 480,46 &gt; 411,64 µm². Đếm cell ≠ đo diện tích</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Dùng <code>&gt;&gt;&gt;</code> trên toán hạng <strong>không dấu</strong> trong golden model</td>
+<td><code>&gt;&gt;&gt;</code> hành xử như <code>&gt;&gt;</code>, golden model sai theo cùng lỗi với DUT</td>
+<td>Phải ép <code>$signed()</code> tường minh. TC-003 (<code>0x80 SRA 3</code>) phát hiện ngay</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Để mỗi tầng độn bằng MSB của tầng trước</td>
+<td>Vẫn đúng chức năng nhưng thêm phụ thuộc nối tiếp vô ích</td>
+<td>Đọc <code>datapath.md</code> §4; STA sẽ thấy MSB thành nút cổ chai</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Để mã <code>mode = 2'b10</code> không định nghĩa</td>
+<td>Suy ra latch hoặc sinh <code>X</code> ⟹ vi phạm "0 ô nhớ"</td>
+<td>INV-9 (<code>^dout === 1'bx</code>) trong testbench; <code>synth_stat</code> có cell <code>dl*</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Nghĩ SRA "chỉ tốn một cổng AND"</td>
+<td>Ước lượng diện tích sai 10 lần</td>
+<td>Tổng hợp hai phiên bản: +15 cell, +14,2 % (<code>tradeoff.md</code> §5.1)</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Tưởng <code>shamt[0]</code> chắc chắn là đường chậm nhất</td>
+<td>Chọn sai vector đo timing</td>
+<td>Đo thật: đường tới hạn bắt đầu ở <code>din[7]</code> (0,78 ns), không ở <code>shamt[0]</code> (0,64 ns)</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Đếm cell <code>mux2i_1</code> trong netlist để suy ra số tầng</td>
+<td>RTL mô tả 24 mux 2:1, netlist chỉ còn 11</td>
+<td>Bằng chứng cấu trúc phải đọc từ <strong>phân cấp module</strong> và <strong>tên instance trên đường tới hạn</strong></td>
+</tr>
+<tr>
+<td>10</td>
+<td>Kết luận "mô phỏng PASS ⟹ kiến trúc đúng"</td>
+<td>Kiểm chứng chức năng <strong>mù về cấu trúc</strong></td>
+<td>V2 và V3 cũng PASS 8 192/8 192 với cùng golden model</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Dùng waveform để chứng minh độ trễ</td>
+<td>Waveform hành vi là zero-delay</td>
+<td>Mở VCD: mọi tín hiệu đổi tức thời tại <code>#1</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>Diễn giải "period 10 ns" thành "chạy được ở 100 MHz"</td>
+<td>Khẳng định vượt mức</td>
+<td><code>vclk</code> chỉ là mốc quy chiếu; A07 không có clock</td>
+</tr>
+<tr>
+<td>13</td>
+<td>So số cell/diện tích của A07 với đề khác</td>
+<td>Hai đề có thể chạy môi trường khác</td>
+<td>Chỉ so trong cùng một lần chạy, cùng script, cùng thư viện</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="10-cau-hoi-mentor-nen-dat-khi-bao-ve">10. Câu hỏi mentor nên đặt khi bảo vệ</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Câu hỏi</th>
+<th>Đáp án mong đợi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Vì sao khối này có đúng 0 flip-flop?</td>
+<td>Vì là mạch tổ hợp: <code>dout</code> chỉ là hàm của <code>(din, shamt, mode)</code> hiện tại. Byte đang xử lý nằm ở thanh ghi đệm <strong>ngoài</strong> A07.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Vì sao <strong>ba</strong> tầng, không phải hai hay bốn?</td>
+<td>Vì <code>shamt</code> là 3 bit và <code>1+2+4 = 7</code> phủ trọn <code>0…7</code>. Tổng quát: <code>log₂N</code> tầng cho <code>N</code> bit.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>"Dịch 3 vị trí" tốn bao nhiêu cổng?</td>
+<td><strong>Không cổng nào</strong>, nếu 3 là hằng số — đó chỉ là cách nối dây. Chi phí nằm ở việc <strong>chọn</strong> giữa các cách nối dây, tức ở mux.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Không có clock, vậy sao ba tầng lại "chạy lần lượt"?</td>
+<td>"Lần lượt" là phụ thuộc <strong>dữ liệu</strong>, không phải phụ thuộc <strong>chu kỳ</strong>. <code>u_stage2</code> chờ điện áp trên dây <code>s1</code> xác lập — vật lý, không phải giao thức.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>SRA khác SRL ở đâu trong phần cứng? Cho ví dụ số.</td>
+<td>Ở một dây: <code>fill</code>. Ví dụ <code>din=0x80, shamt=2</code>: SRL→<code>0x20</code>, SRA→<code>0xE0</code>. Trên toàn không gian, hai chế độ khác nhau ở <strong>896/2 048</strong> tổ hợp.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>SRA tốn thêm bao nhiêu diện tích?</td>
+<td><strong>+15 cell, +14,2 %</strong> — gấp mười lần ước lượng "một cổng AND", vì <code>fill</code> biến 7 nút hằng số thành 7 nút sống.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Mã <code>mode = 2'b10</code> nghĩa là gì? Vì sao không để trống?</td>
+<td>Bí danh của SLL (dịch trái số học ≡ dịch trái logic). Để trống sẽ suy ra latch hoặc sinh <code>X</code>. Rotate nằm ngoài phạm vi nên không được dùng mã này.</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Đường tới hạn đi qua mấy tầng? Bắt đầu ở đâu?</td>
+<td>Đủ <strong>ba</strong> tầng (<code>u_stage1→u_stage2→u_stage4</code>), <strong>cộng</strong> cổng <code>and3_1</code> sinh <code>fill</code>. Bắt đầu ở <code>din[7]</code>, <strong>không</strong> ở <code>shamt[0]</code>. 7 cell, 0,78 ns.</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Tầng nào đắt nhất?</td>
+<td>Tầng <code>S=1</code> (143,89 µm²), <strong>không</strong> phải tầng <code>S=4</code> (122,62 µm²). Tầng dịch xa nhất lại rẻ nhất vì mọi lát cắt của nó đều có một nhánh suy biến.</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Bạn nói có ba tầng — chứng minh bằng netlist đi.</td>
+<td>Ba instance riêng trong báo cáo phân cấp Yosys; ba tên <code>u_stage1/…</code>, <code>u_stage2/…</code>, <code>u_stage4/…</code> trên đường tới hạn của OpenSTA. <strong>Không</strong> chứng minh bằng cách đếm cell mux — netlist chỉ còn 11/24.</td>
+</tr>
+<tr>
+<td>11</td>
+<td>8 192/8 192 PASS — chứng minh mạch là ba tầng chưa?</td>
+<td><strong>Chưa.</strong> Kiểm chứng chức năng mù về cấu trúc. V2 (<code>case</code> 8 nhánh) cũng PASS 8 192/8 192 với cùng golden model.</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Mẹo đảo-dịch-đảo tiết kiệm được gì?</td>
+<td><strong>Không tiết kiệm gì ở đây.</strong> Đo thật: +10,9 % diện tích, +85,9 % độ trễ, vì hai lớp mux đảo nằm nối tiếp và thêm 2 mức vào đường tới hạn.</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Con số 0,78 ns có phải độ trễ thật của chip không?</td>
+<td>Không. Độ trễ <strong>sau tổng hợp</strong>, chưa có RC dây, một góc PVT. Sau routing sẽ lớn hơn.</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Vì sao <code>shamt[2]</code> không nhanh hơn <code>shamt[1]</code> dù đi qua ít tầng hơn?</td>
+<td>Vì <code>shamt[2]</code> có fanout 8 và lái cả tám lát cắt của tầng cuối. Số mức logic không phải là độ trễ.</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Ngân sách chân có vấn đề gì không?</td>
+<td>Không. 13 bit vào + 8 bit ra = <strong>21/24 chân</strong>, còn dư 3 — đúng như Charter mục 4 ghi.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="11-gioi-han-da-chung-minh-duoc-gi-chua-chung-minh-duoc-gi">11. Giới hạn: đã chứng minh được gì, chưa chứng minh được gì</h2>
+<h3 id="da-chung-minh">Đã chứng minh</h3>
+<ol>
+<li>Hàm của A07 đúng trên <strong>toàn bộ</strong> không gian đầu vào: 8 192/8 192 tổ hợp, 0 sai lệch.</li>
+<li>Chín bất biến của đặc tả luôn giữ: 17 458 lần kiểm, 0 vi phạm.</li>
+<li><strong>Ba</strong> hiện thực độc lập đồng ý với nhau: Python toán tử, Python ba tầng, SV reference, RTL.</li>
+<li>Cấu trúc ba tầng <strong>phủ đủ</strong> lượng dịch 0…7 — chứng minh bằng Python trước khi viết RTL.</li>
+<li><strong>0 ô nhớ</strong> — xác nhận bởi hai bằng chứng độc lập (bảng cell Yosys + công suất Sequential 0,0 %).</li>
+<li><strong>Ba tầng có thật trong mạch đã tổng hợp</strong>: ba instance trong phân cấp, ba tên trên đường tới hạn.</li>
+<li>Kiến trúc tầng <strong>nhỏ hơn</strong> phương án <code>case</code> phẳng: 411,64 so 480,46 µm² (−14,3 %).</li>
+<li>Kiến trúc tầng <strong>nhanh hơn</strong> phương án <code>case</code> phẳng: 0,78 so 1,21 ns (−35,5 %).</li>
+<li>Chi phí của SRA: <strong>+15 cell, +14,2 % diện tích</strong> — đo bằng cách tổng hợp hai phiên bản.</li>
+<li>Chi phí của chiều thứ hai: <strong>+50 cell, +48,9 % diện tích</strong>.</li>
+<li>Độ trễ mỗi tầng: <strong>≈ 0,21 ns</strong>, chi tiết 0,24 / 0,26 / 0,12 ns.</li>
+</ol>
+<h3 id="chua-chung-minh">Chưa chứng minh</h3>
+<ol>
+<li>Netlist tương đương RTL về chức năng — cần <strong>mô phỏng gate-level</strong>.</li>
+<li>Không có glitch gây hại — mô phỏng hiện tại là <strong>zero-delay</strong>, không thể thấy glitch.</li>
+<li>Độ trễ <strong>thật sau routing</strong> — 0,78 ns chưa tính ký sinh dây.</li>
+<li>Biên an toàn qua các <strong>góc PVT</strong> — mới đo ở một góc.</li>
+<li>Công suất thật của ứng dụng — 1,35·10⁻⁵ W dùng activity mặc định, không lấy từ VCD.</li>
+<li>Layout tuân thủ quy tắc chế tạo (DRC), khớp netlist (LVS), và có file GDSII.</li>
+<li>Thứ hạng giữa V1/V2/V3 <strong>sau P&amp;R</strong> — có thể đổi, nhất là với V3 vốn nhiều dây chéo.</li>
+</ol>
+<h3 id="ngoai-pham-vi-khong-duoc-khang-dinh">Ngoài phạm vi — không được khẳng định</h3>
+<p>"Đã sign-off", "đã tape-out", "đã chế tạo", "đã kiểm tra sau chế tạo", "chạy được ở
+XXX MHz". Charter mục 3 loại tất cả khỏi phạm vi. Dịch vòng (rotate) và dịch trên dữ liệu
+rộng hơn 8 bit cũng nằm ngoài phạm vi.</p>
+<hr>
+<p><em>Phiên bản: v2.0 (thiết kế lại) · Ngày: 2026-09-24</em></p>
+</main>
+<footer class="doc">
+  Tài liệu sinh từ <code>implementation-notes_A07.md</code>.
+  Mọi số liệu đều kèm công cụ, phiên bản và lệnh tái lập trong
+  <code>07_TRACEABILITY/evidence_index.md</code>.
+</footer>
+</div>
+<script>
+(function(){
+  var b=document.createElement('button');
+  b.className='themebtn'; b.type='button';
+  function lbl(){var t=document.documentElement.getAttribute('data-theme');
+    return t==='dark'?'Nen sang':(t==='light'?'Nen toi':'Doi nen');}
+  b.textContent=lbl();
+  try{var s=localStorage.getItem('rtl2gds-theme'); if(s)document.documentElement.setAttribute('data-theme',s);}catch(e){}
+  b.textContent=lbl();
+  b.addEventListener('click',function(){
+    var cur=document.documentElement.getAttribute('data-theme');
+    var mq=window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var next=cur?(cur==='dark'?'light':'dark'):(mq?'light':'dark');
+    document.documentElement.setAttribute('data-theme',next);
+    try{localStorage.setItem('rtl2gds-theme',next);}catch(e){}
+    b.textContent=lbl();
+  });
+  document.body.appendChild(b);
+})();
+</script>
+</body>
+</html>

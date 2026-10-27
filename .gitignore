@@ -1,0 +1,8 @@
+
+# Backup files
+*.bak
+*.bak/
+02_SPECIFICATION.bak/
+
+# Temporary STA history
+.history_sta

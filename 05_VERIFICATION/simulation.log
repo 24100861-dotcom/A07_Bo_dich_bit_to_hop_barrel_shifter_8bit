@@ -1,0 +1,61 @@
+VCD info: dumpfile a07_waves.vcd opened for output.
+======================================================================
+  A07 . TESTBENCH - Bo dich bit to hop (barrel shifter) 8-bit
+  DUT: a07_barrel8   Chuan: a07_reference + a07_reference_bitwise
+======================================================================
+
+[1a] Ca bat buoc cua Charter muc 8
+----------------------------------------------------------------------
+  TC-001a dich 0 - SLL              din=10100101 SLL shamt=0 | t1=10100101 t2=10100101 | OUT=10100101  [PASS]
+  TC-001b dich 0 - SRL              din=10100101 SRL shamt=0 | t1=10100101 t2=10100101 | OUT=10100101  [PASS]
+  TC-001c dich 0 - SLA              din=10100101 SLA shamt=0 | t1=10100101 t2=10100101 | OUT=10100101  [PASS]
+  TC-001d dich 0 - SRA              din=10100101 SRA shamt=0 | t1=10100101 t2=10100101 | OUT=10100101  [PASS]
+  TC-002a dich 7 - SLL              din=11111111 SLL shamt=7 | t1=11111110 t2=11111000 | OUT=10000000  [PASS]
+  TC-002b dich 7 - SRL              din=11111111 SRL shamt=7 | t1=01111111 t2=00011111 | OUT=00000001  [PASS]
+  TC-003a SRA bit dau 1             din=10000000 SRA shamt=3 | t1=11000000 t2=11110000 | OUT=11110000  [PASS]
+  TC-003b SRA tang khong lien tiep  din=10110100 SRA shamt=5 | t1=11011010 t2=11011010 | OUT=11111101  [PASS]
+  TC-004a doi chung - SRL           din=10000000 SRL shamt=2 | t1=10000000 t2=00100000 | OUT=00100000  [PASS]
+  TC-004b doi chung - SRA           din=10000000 SRA shamt=2 | t1=10000000 t2=11100000 | OUT=11100000  [PASS]
+
+[1b] Ca tu xay dung - co ca bien
+----------------------------------------------------------------------
+  TC-005  BIEN diem bat dong SRA    din=11111111 SRA shamt=7 | t1=11111111 t2=11111111 | OUT=11111111  [PASS]
+  TC-006  BIEN mot bit len dinh     din=00000001 SLL shamt=7 | t1=00000010 t2=00001000 | OUT=10000000  [PASS]
+  TC-007  BIEN mot bit xuong day    din=10000000 SRL shamt=7 | t1=01000000 t2=00010000 | OUT=00000001  [PASS]
+  TC-008  BIEN day het ra ngoai     din=11110000 SLL shamt=7 | t1=11100000 t2=10000000 | OUT=00000000  [PASS]
+  TC-009a hoi tu - SRL              din=01111111 SRL shamt=4 | t1=01111111 t2=01111111 | OUT=00000111  [PASS]
+  TC-009b hoi tu - SRA              din=01111111 SRA shamt=4 | t1=01111111 t2=01111111 | OUT=00000111  [PASS]
+  TC-010a bi danh - SLL             din=01011010 SLL shamt=3 | t1=10110100 t2=11010000 | OUT=11010000  [PASS]
+  TC-010b bi danh - SLA             din=01011010 SLA shamt=3 | t1=10110100 t2=11010000 | OUT=11010000  [PASS]
+  TC-011a soi tang 1                din=00001111 SLL shamt=1 | t1=00011110 t2=00011110 | OUT=00011110  [PASS]
+  TC-011b soi tang 2                din=00001111 SLL shamt=2 | t1=00001111 t2=00111100 | OUT=00111100  [PASS]
+  TC-011c soi tang 4                din=00001111 SLL shamt=4 | t1=00001111 t2=00001111 | OUT=11110000  [PASS]
+  TC-011d soi tang 2+4              din=00001111 SLL shamt=6 | t1=00001111 t2=00111100 | OUT=11000000  [PASS]
+  TC-012  mau xen ke                din=10101010 SRL shamt=1 | t1=01010101 t2=01010101 | OUT=01010101  [PASS]
+
+  Vector co ten da chay: 23
+
+[2] Quet vet can toan bo khong gian dau vao
+----------------------------------------------------------------------
+  256 din x 8 shamt x 4 mode = 8192 to hop
+  Da quet: 8192/8192 to hop, sai lech: 0
+
+[2b] Do dinh luong: SRL so voi SRA tren 2048 to hop dich phai
+----------------------------------------------------------------------
+  khac nhau : 896 to hop
+  trung nhau: 1152 to hop  (ly thuyet 128*8 + 128*1 = 1152)
+  ==> chi trung khi din[7]=0 HOAC shamt=0 : DUNG
+
+======================================================================
+  TONG KET A07
+======================================================================
+  Vector co ten            : 23
+  Vector quet vet can      : 8192/8192
+  TONG SO VECTOR           : 8215
+  Sai lech so voi chuan    : 0
+  Lan kiem bat bien        : 17458
+  Vi pham bat bien         : 0
+  Flip-flop trong RTL      : 0 (khong co always_ff, khong co clk/rst)
+
+  KET QUA A07: PASS - 8215 vector, 0 sai lech, 17458 lan kiem bat bien, 0 vi pham
+05_VERIFICATION/testbench/a07_tb.sv:430: $finish called at 8215000 (1ps)

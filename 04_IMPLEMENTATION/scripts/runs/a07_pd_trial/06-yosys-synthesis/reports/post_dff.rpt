@@ -1,0 +1,25 @@
+93. Printing statistics.
+
+=== a07_barrel8 ===
+
+        +----------Local Count, excluding submodules.
+        | 
+       47 wires
+       64 wire bits
+        4 public wires
+       21 public wire bits
+        4 ports
+       21 port bits
+       51 cells
+        7   $_ANDNOT_
+        1   $_AND_
+       41   $_MUX_
+        1   $_NAND_
+        1   $_NOT_
+
+   Area for cell type $_ANDNOT_ is unknown!
+   Area for cell type $_AND_ is unknown!
+   Area for cell type $_MUX_ is unknown!
+   Area for cell type $_NAND_ is unknown!
+   Area for cell type $_NOT_ is unknown!
+
